@@ -3,13 +3,14 @@ package model
 import "time"
 
 type User struct {
-	ID        int       `json:"id"`
-	Name      string    `json:"name"`
-	Email     string    `json:"email"`
-	Phone     string    `json:"phone"`
-	Clinic    string    `json:"clinic"`
-	Password  string    `json:"password"`
-	Role      string    `json:"role"`
-	CreatedAt time.Time `gorm:"autoCreateTime"`
-	UpdatedAt time.Time `gorm:"autoUpdateTime"`
+	ID           string    `gorm:"primaryKey;type:uuid;default:gen_random_uuid()"`
+	Name         string    `json:"name"`
+	Email        string    `json:"email"`
+	Phone        string    `json:"phone"`
+	Clinic       string    `json:"clinic"`
+	Password     string    `json:"password"`
+	Role         string    `json:"role"`
+	RefreshToken string    `json:"refresh_token"`
+	CreatedAt    time.Time `gorm:"autoCreateTime"`
+	UpdatedAt    time.Time `gorm:"autoUpdateTime"`
 }

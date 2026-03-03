@@ -12,7 +12,7 @@ import (
 
 type UserService interface {
 	RegisterUser(userRequestDTO *dto.UserRequestDTO) error
-	LoginUser(requestDto string) (string, error)
+	LoginUser(requestDto *dto.LoginRequestDTO) (string, string, model.User, error)
 }
 
 type userService struct {
@@ -56,6 +56,33 @@ func (s *userService) RegisterUser(userRequestDTO *dto.UserRequestDTO) error {
 	return nil
 }
 
-func (s *userService) LoginUser(requestDto string) (string, error) {
-	return "token", nil
+func (s *userService) LoginUser(loginRequestDto *dto.LoginRequestDTO) (string, string, model.User, error) {
+	loginRequestDto.Email = strings.ToLower(loginRequestDto.Email)
+	user, err := s.userRepository.GetUserByEmail(loginRequestDto.Email)
+	if err != nil {
+		return "", "", model.User{}, fmt.Errorf("usuário ou senha incorretos")
+	}
+
+	if !utils.ComparePassword(user.Password, loginRequestDto.Password) {
+		return "", "", model.User{}, fmt.Errorf("usuário ou senha incorretos")
+	}
+
+	token, err := utils.GenerateToken(user.ID, user.Role)
+	if err != nil {
+		return "", "", model.User{}, fmt.Errorf("erro ao gerar token")
+	}
+
+	refreshToken, err := utils.GenerateRefreshToken()
+	if err != nil {
+		return "", "", model.User{}, fmt.Errorf("erro ao gerar refresh token")
+	}
+
+	// salvar o refresh token no banco de dados
+	user.RefreshToken = utils.HashToken(refreshToken)
+	err = s.userRepository.UpdateUser(user)
+	if err != nil {
+		return "", "", model.User{}, fmt.Errorf("erro ao salvar refresh token")
+	}
+
+	return token, refreshToken, *user, nil
 }

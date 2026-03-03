@@ -3,8 +3,6 @@ package handler
 import (
 	"clinicprobackend/internal/auth/service"
 
-	"io"
-
 	"github.com/gin-gonic/gin"
 	"clinicprobackend/internal/auth/dto"
 	"clinicprobackend/internal/utils"
@@ -43,16 +41,31 @@ func (h *UserHandler) RegisterUser(c *gin.Context) {
 }
 
 func (h *UserHandler) LoginUser(c *gin.Context) {
-	body, err := io.ReadAll(c.Request.Body)
-
-	token, err := h.service.LoginUser(string(body))
-	if err != nil {
-		c.JSON(500, gin.H{"error": err.Error()})
+	var loginRequestDTO dto.LoginRequestDTO
+	if err := c.ShouldBindJSON(&loginRequestDTO); err != nil {
+		utils.SendErrorResponse(c, "Requisição inválida", http.StatusBadRequest)
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"token": token,
-		"user":  gin.H{"name": "user", "email": "email", "role": "role"},
-	})
+	token, refreshToken, user, err := h.service.LoginUser(&loginRequestDTO)
+	if err != nil {
+		utils.SendErrorResponse(c, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	c.SetCookie(
+		"refresh_token", // nome
+		refreshToken,    // valor
+		60*60*24*7,      // duração em segundos (7 dias)
+		"/",             // path
+		"",              // domain (coloque seu domínio em prod)
+		false,           // secure (true em produção HTTPS)
+		true,            // httpOnly (IMPORTE!)
+	)
+
+	utils.SendSuccessResponse(c, "Usuário logado com sucesso.",
+		gin.H{
+			"token": token,
+			"user":  gin.H{"name": user.Name, "email": user.Email, "role": user.Role},
+		})
 }

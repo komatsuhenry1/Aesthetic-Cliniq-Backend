@@ -8,9 +8,10 @@ import (
 )
 
 type UserRepository interface {
-	LoginUser(requestDto string) (string, error)
 	CreateUser(user *model.User) error
 	GetUserByUserNameOrEmail(name, email string) (*model.User, error)
+	GetUserByEmail(email string) (*model.User, error)
+	UpdateUser(user *model.User) error
 }
 
 type userRepository struct {
@@ -35,6 +36,14 @@ func (r *userRepository) GetUserByUserNameOrEmail(name, email string) (*model.Us
 	return &user, nil
 }
 
-func (r *userRepository) LoginUser(requestDto string) (string, error) {
-	return "token", nil
+func (r *userRepository) GetUserByEmail(email string) (*model.User, error) {
+	var user model.User
+	if err := r.db.Where("email = ?", email).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
+func (r *userRepository) UpdateUser(user *model.User) error {
+	return r.db.Save(user).Error
 }
