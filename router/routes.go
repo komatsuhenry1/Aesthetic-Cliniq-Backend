@@ -15,7 +15,7 @@ func InitRouter() *gin.Engine {
 	// r.GET("/calls", middleware.AuthUser(), container.CallHandler.FindCallsByStatus)
 	// r.PATCH("/solve/:id", middleware.AuthUser(), container.CallHandler.SolveCall)
 
-	// r.POST("/register", container.UserHandler.RegisterUser)
+	r.POST("/register", container.UserHandler.RegisterUser)
 	r.POST("/login", container.UserHandler.LoginUser)
 	// r.POST("/refresh-token", container.UserHandler.RefreshToken)
 	// // r.GET("/health", container.UserHandler.CheckMyIp)

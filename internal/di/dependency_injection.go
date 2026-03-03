@@ -1,6 +1,7 @@
 package di
 
 import (
+	"clinicprobackend/config"
 	userHandler "clinicprobackend/internal/auth/handler"
 	userRepository "clinicprobackend/internal/auth/repository"
 	userService "clinicprobackend/internal/auth/service"
@@ -11,10 +12,10 @@ type Container struct {
 }
 
 func NewContainer() *Container {
-	//db := config.GetDB()
+	db := config.GetDB()
 	//supabaseClient := config.GetClient()
 
-	userRepository := userRepository.NewUserRepository()
+	userRepository := userRepository.NewUserRepository(db)
 	userService := userService.NewUserService(userRepository)
 	userHandler := userHandler.NewUserHandler(userService)
 
