@@ -3,11 +3,27 @@ package router
 import (
 	"clinicprobackend/internal/di"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
+	"time"
 )
 
 func InitRouter() *gin.Engine {
 	container := di.NewContainer()
 	r := gin.Default()
+
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{
+			"*",
+			"http://localhost:3000",      // Para acesso local via localhost
+			"http://192.168.18.153:3000", // Para acesso via IP na rede local
+		},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
 
 	// r.GET("/health", container.UserHandler.HealthCheck)
 
