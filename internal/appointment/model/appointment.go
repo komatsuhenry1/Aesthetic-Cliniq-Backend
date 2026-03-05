@@ -11,6 +11,7 @@ type Appointment struct {
 	StartTime      time.Time `gorm:"not null" json:"start_time"`
 	EndTime        time.Time `gorm:"not null" json:"end_time"`
 	Notes          string    `gorm:"type:text;not null" json:"notes"`
+	PaymentMethod  string    `gorm:"type:varchar(20);not null" json:"payment_method"`
 	Status         string    `gorm:"type:varchar(20);not null" json:"status"` // "confirmado", "pendente", "em-andamento", "concluido"
 	CreatedAt      time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt      time.Time `gorm:"autoUpdateTime" json:"updated_at"`

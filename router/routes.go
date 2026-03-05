@@ -2,9 +2,10 @@ package router
 
 import (
 	"clinicprobackend/internal/di"
-	"github.com/gin-gonic/gin"
-	"github.com/gin-contrib/cors"
 	"time"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 )
 
 func InitRouter() *gin.Engine {
@@ -24,7 +25,6 @@ func InitRouter() *gin.Engine {
 		MaxAge:           12 * time.Hour,
 	}))
 
-
 	// r.GET("/health", container.UserHandler.HealthCheck)
 
 	// r.POST("/call", middleware.AuthUser(), container.CallHandler.CallRegister)
@@ -33,6 +33,9 @@ func InitRouter() *gin.Engine {
 
 	r.POST("/register", container.UserHandler.RegisterUser)
 	r.POST("/login", container.UserHandler.LoginUser)
+
+	r.POST("/appointment", container.AppointmentHandler.CreateAppointment)
+
 	// r.POST("/refresh-token", container.UserHandler.RefreshToken)
 	// // r.GET("/health", container.UserHandler.CheckMyIp)
 
