@@ -40,3 +40,12 @@ func (a *AppointmentRequestDTO) Validate() error {
 	}
 	return nil
 }
+
+type AppointmentResponseDTO struct {
+	StartTime    time.Time `json:"startTime"`
+	EndTime      time.Time `json:"endTime"`
+	Patient      string    `json:"patient"`
+	Procedure    string    `json:"procedure"`
+	Professional string    `json:"professional"`
+	Status       string    `json:"status"`
+}

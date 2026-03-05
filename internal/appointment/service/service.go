@@ -8,6 +8,8 @@ import (
 
 type AppointmentService interface {
 	CreateAppointment(requestDto *dto.AppointmentRequestDTO) error
+	GetAppointmentsToday() ([]dto.AppointmentResponseDTO, error)
+	GetAppointmentsWeek() ([]dto.AppointmentResponseDTO, error)
 }
 
 type appointmentService struct {
@@ -32,4 +34,12 @@ func (s *appointmentService) CreateAppointment(requestDto *dto.AppointmentReques
 	}
 
 	return s.appointmentRepository.CreateAppointment(&appointment)
+}
+
+func (s *appointmentService) GetAppointmentsToday() ([]dto.AppointmentResponseDTO, error) {
+	return s.appointmentRepository.GetAppointmentsToday()
+}
+
+func (s *appointmentService) GetAppointmentsWeek() ([]dto.AppointmentResponseDTO, error) {
+	return s.appointmentRepository.GetAppointmentsWeek()
 }
