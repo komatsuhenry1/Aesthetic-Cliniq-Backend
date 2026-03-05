@@ -39,14 +39,21 @@ func (h *AppointmentHandler) CreateAppointment(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Agendamento criado com sucesso.", nil)
 }
 
-func (h *AppointmentHandler) GetAppointmentsToday(c *gin.Context) {
-	appointments, err := h.service.GetAppointmentsToday()
+func (h *AppointmentHandler) GetAppointmentsByDate(c *gin.Context) {
+	dateStr := c.Param("date")
+
+	if dateStr == "" {
+		utils.SendErrorResponse(c, "Data não informada. Ex: /appointment/2026-03-05", http.StatusBadRequest)
+		return
+	}
+
+	appointments, err := h.service.GetAppointmentsByDate(dateStr)
 	if err != nil {
 		utils.SendErrorResponse(c, "Erro ao buscar agendamentos do dia", http.StatusInternalServerError)
 		return
 	}
 
-	utils.SendSuccessResponse(c, "Agendamentos de hoje.", appointments)
+	utils.SendSuccessResponse(c, "Agendamentos do dia "+dateStr, appointments)
 }
 
 func (h *AppointmentHandler) GetAppointmentsWeek(c *gin.Context) {
