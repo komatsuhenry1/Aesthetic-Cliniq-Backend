@@ -69,8 +69,8 @@ func AuthUser() gin.HandlerFunc {
 		}
 
 		role, ok := claims["role"].(string)
-		if !ok || role != "USER" && role != "ADMIN" {
-			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"success": "false", "data": []interface{}{}, "message": "Rota com acesso apenas para usuários comuns"})
+		if !ok || role != "ADMIN" {
+			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"success": "false", "data": []interface{}{}, "message": "Rota com acesso apenas para usuários administradores"})
 			return
 		}
 

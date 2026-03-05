@@ -3,6 +3,7 @@ package router
 
 import (
 	"clinicprobackend/internal/di"
+	"clinicprobackend/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,6 +11,6 @@ import (
 func SetupAppointmentRoutes(r *gin.RouterGroup, container *di.Container) {
 	appointment := r.Group("/appointment")
 	{
-		appointment.POST("/", container.AppointmentHandler.CreateAppointment)
+		appointment.POST("/", middleware.AuthUser(), container.AppointmentHandler.CreateAppointment)
 	}
 }
