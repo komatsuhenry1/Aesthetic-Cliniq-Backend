@@ -40,10 +40,10 @@ func (h *AppointmentHandler) CreateAppointment(c *gin.Context) {
 }
 
 func (h *AppointmentHandler) GetAppointmentsByDate(c *gin.Context) {
-	dateStr := c.Param("date")
+	dateStr := c.Query("date")
 
 	if dateStr == "" {
-		utils.SendErrorResponse(c, "Data não informada. Ex: /appointment/2026-03-05", http.StatusBadRequest)
+		utils.SendErrorResponse(c, "Data não informada. Ex: /appointment?date=2026-03-05", http.StatusBadRequest)
 		return
 	}
 
@@ -56,12 +56,20 @@ func (h *AppointmentHandler) GetAppointmentsByDate(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Agendamentos do dia "+dateStr, appointments)
 }
 
-func (h *AppointmentHandler) GetAppointmentsWeek(c *gin.Context) {
-	appointments, err := h.service.GetAppointmentsWeek()
-	if err != nil {
-		utils.SendErrorResponse(c, "Erro ao buscar agendamentos da semana", http.StatusInternalServerError)
+func (h *AppointmentHandler) GetAppointmentsWeek(c *gin.Context) { 
+	startDate := c.Query("start_date")
+	endDate := c.Query("end_date")
+
+	if startDate == "" || endDate == "" {
+		utils.SendErrorResponse(c, "Data inicial e final não informadas. Ex: /appointment/week?start_date=2026-03-01&end_date=2026-03-07", http.StatusBadRequest)
 		return
 	}
 
-	utils.SendSuccessResponse(c, "Agendamentos da semana.", appointments)
+	appointments, err := h.service.GetAppointmentsWeek(startDate, endDate)
+	if err != nil {
+		utils.SendErrorResponse(c, "Erro ao buscar agendamentos do período", http.StatusInternalServerError)
+		return
+	}
+
+	utils.SendSuccessResponse(c, "Agendamentos do período", appointments)
 }

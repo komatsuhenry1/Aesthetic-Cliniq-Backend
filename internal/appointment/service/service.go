@@ -9,7 +9,7 @@ import (
 type AppointmentService interface {
 	CreateAppointment(requestDto *dto.AppointmentRequestDTO) error
 	GetAppointmentsByDate(date string) ([]dto.AppointmentResponseDTO, error)
-	GetAppointmentsWeek() ([]dto.AppointmentResponseDTO, error)
+	GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error)
 }
 
 type appointmentService struct {
@@ -40,6 +40,6 @@ func (s *appointmentService) GetAppointmentsByDate(date string) ([]dto.Appointme
 	return s.appointmentRepository.GetAppointmentsByDate(date)
 }
 
-func (s *appointmentService) GetAppointmentsWeek() ([]dto.AppointmentResponseDTO, error) {
-	return s.appointmentRepository.GetAppointmentsWeek()
+func (s *appointmentService) GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error) {
+	return s.appointmentRepository.GetAppointmentsWeek(startDate, endDate)
 }
