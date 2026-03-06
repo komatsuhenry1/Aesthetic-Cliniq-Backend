@@ -22,13 +22,15 @@ func NewAppointmentService(repo repository.AppointmentRepository) AppointmentSer
 
 func (s *appointmentService) CreateAppointment(requestDto *dto.AppointmentRequestDTO) error {
 	appointment := model.Appointment{
-		PatientID:      requestDto.PatientID,
-		ProfessionalID: requestDto.ProfessionalID,
-		Procedure:      requestDto.Procedure,
-		Price:          requestDto.Price,
-		StartTime:      requestDto.StartTime,
-		EndTime:        requestDto.EndTime,
-		Notes:          requestDto.Notes,
+		PatientID:        requestDto.PatientID,
+		ProfessionalID:   requestDto.ProfessionalID,
+		PatientName:      requestDto.PatientName,
+		ProfessionalName: requestDto.ProfessionalName,
+		Procedure:        requestDto.Procedure,
+		Price:            requestDto.Price,
+		StartTime:        requestDto.StartTime,
+		EndTime:          requestDto.EndTime,
+		Notes:            requestDto.Notes,
 		PaymentMethod:  requestDto.PaymentMethod,
 		Status:         "pendente",
 	}

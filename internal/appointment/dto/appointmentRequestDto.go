@@ -6,14 +6,16 @@ import (
 )
 
 type AppointmentRequestDTO struct {
-	PatientID      string    `json:"client_id" binding:"required"`
-	ProfessionalID string    `json:"professional_id" binding:"required"`
-	Procedure      string    `json:"procedure" binding:"required"`
-	Price          float64   `json:"price" binding:"required"`
-	StartTime      time.Time `json:"start_time" binding:"required"`
-	EndTime        time.Time `json:"end_time" binding:"required"`
-	PaymentMethod  string    `json:"payment_method" binding:"required"`
-	Notes          string    `json:"notes" binding:"required"`
+	PatientID        string    `json:"client_id" binding:"required"`
+	ProfessionalID   string    `json:"professional_id" binding:"required"`
+	PatientName      string    `json:"patient_name" binding:"required"`
+	ProfessionalName string    `json:"professional_name" binding:"required"`
+	Procedure        string    `json:"procedure" binding:"required"`
+	Price            float64   `json:"price" binding:"required"`
+	StartTime        time.Time `json:"start_time" binding:"required"`
+	EndTime          time.Time `json:"end_time" binding:"required"`
+	PaymentMethod    string    `json:"payment_method" binding:"required"`
+	Notes            string    `json:"notes" binding:"required"`
 }
 
 func (a *AppointmentRequestDTO) Validate() error {
@@ -42,10 +44,11 @@ func (a *AppointmentRequestDTO) Validate() error {
 }
 
 type AppointmentResponseDTO struct {
-	StartTime    time.Time `json:"startTime"`
-	EndTime      time.Time `json:"endTime"`
-	Patient      string    `json:"patient"`
-	Procedure    string    `json:"procedure"`
-	Professional string    `json:"professional"`
-	Status       string    `json:"status"`
+	StartTime        time.Time `json:"startTime"`
+	EndTime          time.Time `json:"endTime"`
+	PatientName      string    `json:"patient_name"`
+	ProfessionalName string    `json:"professional_name"`
+	Procedure        string    `json:"procedure"`
+	Professional     string    `json:"professional"`
+	Status           string    `json:"status"`
 }

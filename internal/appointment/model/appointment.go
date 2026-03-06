@@ -6,6 +6,8 @@ type Appointment struct {
 	ID             string    `gorm:"primaryKey;type:uuid;default:gen_random_uuid()" json:"id"`
 	PatientID      string    `gorm:"type:uuid;not null" json:"patient_id"`
 	ProfessionalID string    `gorm:"type:uuid;not null" json:"professional_id"`
+	PatientName    string    `gorm:"type:varchar(255);not null" json:"patient_name"`
+	ProfessionalName string    `gorm:"type:varchar(255);not null" json:"professional_name"`
 	Procedure      string    `gorm:"type:varchar(255);not null" json:"procedure"`
 	Price          float64   `gorm:"type:decimal(10,2);not null" json:"price"`
 	StartTime      time.Time `gorm:"not null" json:"start_time"`
