@@ -6,7 +6,7 @@ import (
 	appointmentRepository "clinicprobackend/internal/appointment/repository"
 	appointmentService "clinicprobackend/internal/appointment/service"
 	userHandler "clinicprobackend/internal/auth/handler"
-	userRepository "clinicprobackend/internal/auth/repository"
+	userRepository "clinicprobackend/internal/user/repository"
 	userService "clinicprobackend/internal/auth/service"
 )
 

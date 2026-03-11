@@ -1,10 +1,10 @@
 package service
 
 import (
-	"clinicprobackend/internal/auth/repository"
+	"clinicprobackend/internal/user/repository"
 	"clinicprobackend/internal/auth/dto"
 	"clinicprobackend/internal/utils"
-	"clinicprobackend/internal/auth/model"
+	"clinicprobackend/internal/user/model"
 	"errors"
 	"fmt"
 	"strings"

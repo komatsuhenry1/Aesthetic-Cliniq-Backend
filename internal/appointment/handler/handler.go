@@ -4,6 +4,7 @@ import (
 	"clinicprobackend/internal/appointment/dto"
 	"clinicprobackend/internal/appointment/service"
 	"clinicprobackend/internal/utils"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -76,6 +77,7 @@ func (h *AppointmentHandler) GetAppointmentsWeek(c *gin.Context) {
 
 func (h *AppointmentHandler) GetNextFiveAppointments(c *gin.Context) {
 	appointments, err := h.service.GetNextFiveAppointments()
+	fmt.Println(appointments)
 	if err != nil {
 		utils.SendErrorResponse(c, "Erro ao buscar próximos eventos", http.StatusInternalServerError)
 		return

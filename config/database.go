@@ -2,7 +2,7 @@ package config
 
 import (
 	appointmentModel "clinicprobackend/internal/appointment/model"
-	userModel "clinicprobackend/internal/auth/model"
+	userModel "clinicprobackend/internal/user/model"
 	"fmt"
 	"os"
 

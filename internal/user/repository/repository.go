@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"clinicprobackend/internal/auth/model"
+	"clinicprobackend/internal/user/model"
 	"errors"
 
 	"gorm.io/gorm"
