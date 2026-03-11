@@ -17,6 +17,7 @@ func InitRouter() *gin.Engine {
 			"*",
 			"http://localhost:3000",      // Para acesso local via localhost
 			"http://192.168.18.153:3000", // Para acesso via IP na rede local
+			"http://192.168.18.190:3000", // Para acesso via IP na rede local
 		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},

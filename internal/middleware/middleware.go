@@ -25,6 +25,7 @@ var (
 
 func AuthUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		fmt.Println("AuthUser")
 		ip := c.ClientIP()
 		limiter := getClient(ip)
 		if limiter == nil {
@@ -44,6 +45,8 @@ func AuthUser() gin.HandlerFunc {
 		const BearerSchema = "Bearer "
 		header := c.GetHeader("Authorization")
 
+		fmt.Println(header)
+
 		if header == "" {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "token not found"})
 			return
@@ -56,6 +59,8 @@ func AuthUser() gin.HandlerFunc {
 			}
 			return []byte(os.Getenv("JWT_SECRET")), nil
 		})
+
+		fmt.Println(token)
 
 		if err != nil || !token.Valid {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "invalid token"})
