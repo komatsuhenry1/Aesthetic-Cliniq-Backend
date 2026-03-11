@@ -44,9 +44,7 @@ func AuthUser() gin.HandlerFunc {
 
 		const BearerSchema = "Bearer "
 		header := c.GetHeader("Authorization")
-
-		fmt.Println(header)
-
+		fmt.Println("header", header)
 		if header == "" {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "token not found"})
 			return
