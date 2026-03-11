@@ -12,6 +12,7 @@ type UserRepository interface {
 	GetUserByUserNameOrEmail(name, email string) (*model.User, error)
 	GetUserByEmail(email string) (*model.User, error)
 	UpdateUser(user *model.User) error
+	GetProfessionals() ([]model.User, error)
 }
 
 type userRepository struct {
@@ -46,4 +47,12 @@ func (r *userRepository) GetUserByEmail(email string) (*model.User, error) {
 
 func (r *userRepository) UpdateUser(user *model.User) error {
 	return r.db.Save(user).Error
+}
+
+func (r *userRepository) GetProfessionals() ([]model.User, error) {
+	var professionals []model.User
+	if err := r.db.Where("role = ?", "PROFESSIONAL").Find(&professionals).Error; err != nil {
+		return nil, err
+	}
+	return professionals, nil
 }

@@ -10,7 +10,7 @@ import (
 func SetupAuthRoutes(r *gin.RouterGroup, container *di.Container) {
 	auth := r.Group("/auth")
 	{
-		auth.POST("/register", container.UserHandler.RegisterUser)
-		auth.POST("/login", container.UserHandler.LoginUser)
+		auth.POST("/register", container.AuthHandler.RegisterUser)
+		auth.POST("/login", container.AuthHandler.LoginUser)
 	}
 }
