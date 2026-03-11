@@ -6,6 +6,7 @@ import (
 	"clinicprobackend/internal/utils"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -84,4 +85,35 @@ func (h *AppointmentHandler) GetNextFiveAppointments(c *gin.Context) {
 	}
 
 	utils.SendSuccessResponse(c, "Próximos 5 agendamentos.", appointments)
+}
+
+func (h *AppointmentHandler) UpdateAppointment(c *gin.Context) {
+	appointmentId := c.Param("id")
+
+	var updates map[string]interface{}
+	if err := c.ShouldBindJSON(&updates); err != nil {
+		utils.SendErrorResponse(c, "JSON inválido", http.StatusBadRequest)
+		return
+	}
+
+	protectedFields := map[string]bool{
+		"id":         true,
+		"created_at": true,
+		"updated_at": true,
+	}
+
+	for key := range updates {
+		if protectedFields[strings.ToLower(key)] {
+			utils.SendErrorResponse(c, fmt.Sprintf("Campo(s) %s não pode ser atualizado.", key), http.StatusBadRequest)
+			return
+		}
+	}
+	
+	appointment, err := h.service.UpdateAppointment(appointmentId, updates)
+	if err != nil{
+		utils.SendErrorResponse(c, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	utils.SendSuccessResponse(c, "Agendamento atualizado com sucesso.", appointment)
 }

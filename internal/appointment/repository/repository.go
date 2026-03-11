@@ -12,6 +12,7 @@ type AppointmentRepository interface {
 	GetAppointmentsByDate(date string) ([]dto.AppointmentResponseDTO, error)
 	GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error)
 	GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error)
+	UpdateAppointment(id string, updates map[string]interface{}) (*model.Appointment, error)
 }
 
 type appointmentRepository struct {
@@ -64,4 +65,17 @@ func (r *appointmentRepository) GetNextFiveAppointments() ([]dto.AppointmentResp
 		Scan(&appointments).Error
 
 	return appointments, err
+}
+
+func (r *appointmentRepository) UpdateAppointment(id string, updates map[string]interface{}) (*model.Appointment, error) {
+	var appointment model.Appointment
+	if err := r.db.First(&appointment, "id = ?", id).Error; err != nil {
+		return nil, err
+	}
+
+	if err := r.db.Model(&appointment).Updates(updates).Error; err != nil {
+		return nil, err
+	}
+
+	return &appointment, nil
 }

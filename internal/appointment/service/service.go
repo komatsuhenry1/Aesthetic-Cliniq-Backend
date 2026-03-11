@@ -11,6 +11,7 @@ type AppointmentService interface {
 	GetAppointmentsByDate(date string) ([]dto.AppointmentResponseDTO, error)
 	GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error)
 	GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error)
+	UpdateAppointment(id string, updates map[string]interface{}) (*model.Appointment, error)
 }
 
 type appointmentService struct {
@@ -50,3 +51,8 @@ func (s *appointmentService) GetAppointmentsWeek(startDate string, endDate strin
 func (s *appointmentService) GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error) {
 	return s.appointmentRepository.GetNextFiveAppointments()
 }
+
+func (s *appointmentService) UpdateAppointment(id string, updates map[string]interface{}) (*model.Appointment, error) {
+	return s.appointmentRepository.UpdateAppointment(id, updates)
+}
+
