@@ -11,6 +11,7 @@ type AppointmentRepository interface {
 	CreateAppointment(appointment *model.Appointment) error
 	GetAppointmentsByDate(date string) ([]dto.AppointmentResponseDTO, error)
 	GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error)
+	GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error)
 }
 
 type appointmentRepository struct {
@@ -46,6 +47,20 @@ func (r *appointmentRepository) GetAppointmentsWeek(startDate string, endDate st
 		Joins("LEFT JOIN users ON users.id = appointments.professional_id").
 		Where("appointments.start_time >= ? AND appointments.start_time <= ?", startDate, endDate).
 		Order("appointments.start_time ASC").
+		Scan(&appointments).Error
+
+	return appointments, err
+}
+
+func (r *appointmentRepository) GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error) {
+	var appointments []dto.AppointmentResponseDTO
+
+	err := r.db.Table("appointments").
+		Select("appointments.start_time, appointments.end_time, appointments.patient_name as patient_name, appointments.procedure, appointments.professional_name as professional_name, appointments.status").
+		Joins("LEFT JOIN users ON users.id = appointments.professional_id").
+		Where("appointments.start_time >= CURRENT_TIMESTAMP AND DATE(appointments.start_time) = CURRENT_DATE").
+		Order("appointments.start_time ASC").
+		Limit(5).
 		Scan(&appointments).Error
 
 	return appointments, err

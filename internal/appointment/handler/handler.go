@@ -56,7 +56,7 @@ func (h *AppointmentHandler) GetAppointmentsByDate(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Agendamentos do dia "+dateStr, appointments)
 }
 
-func (h *AppointmentHandler) GetAppointmentsWeek(c *gin.Context) { 
+func (h *AppointmentHandler) GetAppointmentsWeek(c *gin.Context) {
 	startDate := c.Query("start_date")
 	endDate := c.Query("end_date")
 
@@ -72,4 +72,14 @@ func (h *AppointmentHandler) GetAppointmentsWeek(c *gin.Context) {
 	}
 
 	utils.SendSuccessResponse(c, "Agendamentos do período", appointments)
+}
+
+func (h *AppointmentHandler) GetNextFiveAppointments(c *gin.Context) {
+	appointments, err := h.service.GetNextFiveAppointments()
+	if err != nil {
+		utils.SendErrorResponse(c, "Erro ao buscar próximos eventos", http.StatusInternalServerError)
+		return
+	}
+
+	utils.SendSuccessResponse(c, "Próximos 5 agendamentos.", appointments)
 }

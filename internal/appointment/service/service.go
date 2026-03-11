@@ -10,6 +10,7 @@ type AppointmentService interface {
 	CreateAppointment(requestDto *dto.AppointmentRequestDTO) error
 	GetAppointmentsByDate(date string) ([]dto.AppointmentResponseDTO, error)
 	GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error)
+	GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error)
 }
 
 type appointmentService struct {
@@ -31,8 +32,8 @@ func (s *appointmentService) CreateAppointment(requestDto *dto.AppointmentReques
 		StartTime:        requestDto.StartTime,
 		EndTime:          requestDto.EndTime,
 		Notes:            requestDto.Notes,
-		PaymentMethod:  requestDto.PaymentMethod,
-		Status:         "pendente",
+		PaymentMethod:    requestDto.PaymentMethod,
+		Status:           "pendente",
 	}
 
 	return s.appointmentRepository.CreateAppointment(&appointment)
@@ -44,4 +45,8 @@ func (s *appointmentService) GetAppointmentsByDate(date string) ([]dto.Appointme
 
 func (s *appointmentService) GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error) {
 	return s.appointmentRepository.GetAppointmentsWeek(startDate, endDate)
+}
+
+func (s *appointmentService) GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error) {
+	return s.appointmentRepository.GetNextFiveAppointments()
 }
