@@ -44,8 +44,10 @@ func (a *AppointmentRequestDTO) Validate() error {
 }
 
 type AppointmentResponseDTO struct {
-	StartTime        time.Time `json:"startTime"`
-	EndTime          time.Time `json:"endTime"`
+	StartTime        time.Time `json:"start_time"`
+	EndTime          time.Time `json:"end_time"`
+	Price            float64   `json:"price"`
+	PaymentMethod    string    `json:"payment_method"`
 	PatientName      string    `json:"patient_name"`
 	ProfessionalName string    `json:"professional_name"`
 	Procedure        string    `json:"procedure"`

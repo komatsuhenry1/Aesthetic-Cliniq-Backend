@@ -30,7 +30,7 @@ func (r *appointmentRepository) GetAppointmentsByDate(date string) ([]dto.Appoin
 	var appointments []dto.AppointmentResponseDTO
 
 	err := r.db.Table("appointments").
-		Select("appointments.start_time, appointments.end_time, appointments.patient_name as patient_name, appointments.procedure, appointments.professional_name as professional_name, appointments.status").
+		Select("appointments.start_time, appointments.end_time, appointments.price, appointments.payment_method, appointments.patient_name as patient_name, appointments.procedure, appointments.professional_name as professional_name, appointments.status").
 		Joins("LEFT JOIN users ON users.id = appointments.professional_id").
 		Where("DATE(appointments.start_time) = ?", date).
 		Order("appointments.start_time ASC").
@@ -43,7 +43,7 @@ func (r *appointmentRepository) GetAppointmentsWeek(startDate string, endDate st
 	var appointments []dto.AppointmentResponseDTO
 
 	err := r.db.Table("appointments").
-		Select("appointments.start_time, appointments.end_time, appointments.patient_name as patient_name, appointments.procedure, appointments.professional_name as professional_name, appointments.status").
+		Select("appointments.start_time, appointments.end_time, appointments.price, appointments.payment_method, appointments.patient_name as patient_name, appointments.procedure, appointments.professional_name as professional_name, appointments.status").
 		Joins("LEFT JOIN users ON users.id = appointments.professional_id").
 		Where("appointments.start_time >= ? AND appointments.start_time <= ?", startDate, endDate).
 		Order("appointments.start_time ASC").
@@ -56,7 +56,7 @@ func (r *appointmentRepository) GetNextFiveAppointments() ([]dto.AppointmentResp
 	var appointments []dto.AppointmentResponseDTO
 
 	err := r.db.Table("appointments").
-		Select("appointments.start_time, appointments.end_time, appointments.patient_name as patient_name, appointments.procedure, appointments.professional_name as professional_name, appointments.status").
+		Select("appointments.start_time, appointments.end_time, appointments.price, appointments.payment_method, appointments.patient_name as patient_name, appointments.procedure, appointments.professional_name as professional_name, appointments.status").
 		Joins("LEFT JOIN users ON users.id = appointments.professional_id").
 		Where("appointments.start_time >= CURRENT_TIMESTAMP AND DATE(appointments.start_time) = CURRENT_DATE").
 		Order("appointments.start_time ASC").
