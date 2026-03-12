@@ -13,6 +13,7 @@ type UserRepository interface {
 	GetUserByEmail(email string) (*model.User, error)
 	UpdateUser(user *model.User) error
 	GetProfessionals() ([]model.User, error)
+	UpdateUserPartial(id string, updates map[string]interface{}) (*model.User, error)
 }
 
 type userRepository struct {
@@ -55,4 +56,17 @@ func (r *userRepository) GetProfessionals() ([]model.User, error) {
 		return nil, err
 	}
 	return professionals, nil
+}
+
+func (r *userRepository) UpdateUserPartial(id string, updates map[string]interface{}) (*model.User, error) {
+	var user model.User
+	if err := r.db.First(&user, "id = ?", id).Error; err != nil {
+		return nil, err
+	}
+
+	if err := r.db.Model(&user).Updates(updates).Error; err != nil {
+		return nil, err
+	}
+
+	return &user, nil
 }

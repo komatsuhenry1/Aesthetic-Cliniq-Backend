@@ -7,6 +7,7 @@ import (
 
 type UserService interface {
 	GetProfessionals() ([]model.User, error)
+	UpdateUserPartial(id string, updates map[string]interface{}) (*model.User, error)
 }
 
 type userService struct {
@@ -19,4 +20,8 @@ func NewUserService(userRepository repository.UserRepository) UserService {
 
 func (s *userService) GetProfessionals() ([]model.User, error) {
 	return s.userRepository.GetProfessionals()
+}
+
+func (s *userService) UpdateUserPartial(id string, updates map[string]interface{}) (*model.User, error) {
+	return s.userRepository.UpdateUserPartial(id, updates)
 }
