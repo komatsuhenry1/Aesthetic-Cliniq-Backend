@@ -59,7 +59,7 @@ func (r *appointmentRepository) GetNextFiveAppointments() ([]dto.AppointmentResp
 	err := r.db.Table("appointments").
 		Select("appointments.start_time, appointments.end_time, appointments.price, appointments.payment_method, appointments.patient_name as patient_name, appointments.procedure, appointments.professional_name as professional_name, appointments.status").
 		Joins("LEFT JOIN users ON users.id = appointments.professional_id").
-		Where("appointments.start_time >= CURRENT_TIMESTAMP AND DATE(appointments.start_time) = CURRENT_DATE").
+		Where("appointments.start_time >= CURRENT_TIMESTAMP - INTERVAL '3 hours' AND DATE(appointments.start_time) = CURRENT_DATE").
 		Order("appointments.start_time ASC").
 		Limit(5).
 		Scan(&appointments).Error
