@@ -3,7 +3,6 @@ package dto
 import "errors"
 
 type ProfessionalRequestDTO struct {
-	ClinicID  string  `json:"clinic_id" binding:"required"`
 	UserID    *string `json:"user_id"`
 	Name      string  `json:"name" binding:"required"`
 	Specialty string  `json:"specialty" binding:"required"`
@@ -13,9 +12,6 @@ type ProfessionalRequestDTO struct {
 }
 
 func (p *ProfessionalRequestDTO) Validate() error {
-	if p.ClinicID == "" {
-		return errors.New("clinic_id is required")
-	}
 	if p.Name == "" {
 		return errors.New("name is required")
 	}

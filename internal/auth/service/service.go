@@ -67,7 +67,7 @@ func (s *userService) LoginUser(loginRequestDto *dto.LoginRequestDTO) (string, s
 		return "", "", model.User{}, fmt.Errorf("usuário ou senha incorretos")
 	}
 
-	token, err := utils.GenerateToken(user.ID, user.Role)
+	token, err := utils.GenerateToken(user.ID, user.Role, user.ClinicID)
 	if err != nil {
 		return "", "", model.User{}, fmt.Errorf("erro ao gerar token")
 	}

@@ -7,7 +7,7 @@ import (
 )
 
 type ProfessionalService interface {
-	CreateProfessional(requestDto *dto.ProfessionalRequestDTO) error
+	CreateProfessional(requestDto *dto.ProfessionalRequestDTO, clinicId string) error
 	GetAllProfessionals() ([]model.Professional, error)
 	GetProfessionalByID(id string) (*model.Professional, error)
 	UpdateProfessionalPartial(id string, updates map[string]interface{}) (*model.Professional, error)
@@ -22,14 +22,14 @@ func NewProfessionalService(repo repository.ProfessionalRepository) Professional
 	return &professionalService{professionalRepository: repo}
 }
 
-func (s *professionalService) CreateProfessional(requestDto *dto.ProfessionalRequestDTO) error {
+func (s *professionalService) CreateProfessional(requestDto *dto.ProfessionalRequestDTO, clinicId string) error {
 	status := requestDto.Status
 	if status == "" {
 		status = "ativo"
 	}
 
 	professional := model.Professional{
-		ClinicID:  requestDto.ClinicID,
+		ClinicID:  clinicId,
 		UserID:    requestDto.UserID,
 		Name:      requestDto.Name,
 		Specialty: requestDto.Specialty,

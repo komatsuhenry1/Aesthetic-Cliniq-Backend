@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type ProfessionalHandler struct {
@@ -17,6 +18,22 @@ type ProfessionalHandler struct {
 
 func NewProfessionalHandler(s service.ProfessionalService) *ProfessionalHandler {
 	return &ProfessionalHandler{service: s}
+}
+
+func GetClinicId(c *gin.Context) string {
+	raw, exists := c.Get("claims")
+	if !exists {
+		return ""
+	}
+	claims, ok := raw.(jwt.MapClaims)
+	if !ok {
+		return ""
+	}
+	clinicId, ok := claims["clinic_id"].(string)
+	if !ok {
+		return ""
+	}
+	return clinicId
 }
 
 func (h *ProfessionalHandler) CreateProfessional(c *gin.Context) {
@@ -32,7 +49,13 @@ func (h *ProfessionalHandler) CreateProfessional(c *gin.Context) {
 		return
 	}
 
-	if err := h.service.CreateProfessional(&requestDto); err != nil {
+	clinicId := GetClinicId(c)
+	if clinicId == "" {
+		utils.SendErrorResponse(c, "Usuário não autenticado", http.StatusUnauthorized)
+		return
+	}
+
+	if err := h.service.CreateProfessional(&requestDto, clinicId); err != nil {
 		utils.SendErrorResponse(c, err.Error(), http.StatusInternalServerError)
 		return
 	}

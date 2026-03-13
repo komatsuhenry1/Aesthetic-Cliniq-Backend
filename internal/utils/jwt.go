@@ -11,11 +11,12 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func GenerateToken(userId string, userRole string) (string, error) {
+func GenerateToken(userId string, userRole string, clinicId string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub":  userId,
-		"role": userRole,
-		"exp":  time.Now().Add(time.Hour * 8).Unix(),
+		"sub":       userId,
+		"role":      userRole,
+		"clinic_id": clinicId,
+		"exp":       time.Now().Add(time.Hour * 8).Unix(),
 	})
 
 	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
@@ -38,3 +39,4 @@ func HashToken(token string) string {
 	hash := sha256.Sum256([]byte(token))
 	return hex.EncodeToString(hash[:])
 }
+
