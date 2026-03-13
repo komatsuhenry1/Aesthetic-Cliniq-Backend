@@ -10,12 +10,16 @@ import (
 	userHandler "clinicprobackend/internal/user/handler"
 	userRepository "clinicprobackend/internal/user/repository"
 	userService "clinicprobackend/internal/user/service"
+	professionalHandler "clinicprobackend/internal/professional/handler"
+	professionalRepository "clinicprobackend/internal/professional/repository"
+	professionalService "clinicprobackend/internal/professional/service"
 )
 
 type Container struct {
 	AuthHandler        *authHandler.UserHandler
 	UserHandler        *userHandler.UserHandler
 	AppointmentHandler *appointmentHandler.AppointmentHandler
+	ProfessionalHandler *professionalHandler.ProfessionalHandler		
 }
 
 func NewContainer() *Container {
@@ -34,9 +38,14 @@ func NewContainer() *Container {
 	appointmentSvc := appointmentService.NewAppointmentService(appointmentRepo)
 	appointmentHdl := appointmentHandler.NewAppointmentHandler(appointmentSvc)
 
+	professionalRepo := professionalRepository.NewProfessionalRepository(db)
+	professionalSvc := professionalService.NewProfessionalService(professionalRepo)
+	professionalHdl := professionalHandler.NewProfessionalHandler(professionalSvc)
+
 	return &Container{
 		AuthHandler:        authHdl,
 		UserHandler:        userHdl,
 		AppointmentHandler: appointmentHdl,
+		ProfessionalHandler: professionalHdl,
 	}
 }

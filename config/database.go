@@ -3,6 +3,7 @@ package config
 import (
 	appointmentModel "clinicprobackend/internal/appointment/model"
 	userModel "clinicprobackend/internal/user/model"
+	professionalModel "clinicprobackend/internal/professional/model"
 	"fmt"
 	"os"
 
@@ -44,7 +45,7 @@ func ConnectDB() error {
 	if err != nil {
 		return fmt.Errorf("erro ao conectar com o banco de dados: %w", err)
 	}
-	if err := db.AutoMigrate(&userModel.User{}, &appointmentModel.Appointment{}); err != nil {
+	if err := db.AutoMigrate(&userModel.User{}, &appointmentModel.Appointment{}, &professionalModel.Professional{}); err != nil {
 		return fmt.Errorf("erro ao migrar banco de dados: %w", err)
 	}
 	DB = db
