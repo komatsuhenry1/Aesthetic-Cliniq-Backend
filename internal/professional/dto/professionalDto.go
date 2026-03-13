@@ -9,6 +9,7 @@ type ProfessionalRequestDTO struct {
 	Specialty string  `json:"specialty" binding:"required"`
 	Phone     string  `json:"phone" binding:"required"`
 	Email     string  `json:"email" binding:"required"`
+	Status    string  `json:"status"`
 }
 
 func (p *ProfessionalRequestDTO) Validate() error {

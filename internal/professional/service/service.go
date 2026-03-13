@@ -23,6 +23,11 @@ func NewProfessionalService(repo repository.ProfessionalRepository) Professional
 }
 
 func (s *professionalService) CreateProfessional(requestDto *dto.ProfessionalRequestDTO) error {
+	status := requestDto.Status
+	if status == "" {
+		status = "ativo"
+	}
+
 	professional := model.Professional{
 		ClinicID:  requestDto.ClinicID,
 		UserID:    requestDto.UserID,
@@ -30,6 +35,7 @@ func (s *professionalService) CreateProfessional(requestDto *dto.ProfessionalReq
 		Specialty: requestDto.Specialty,
 		Phone:     requestDto.Phone,
 		Email:     requestDto.Email,
+		Status:    status,
 	}
 	return s.professionalRepository.CreateProfessional(&professional)
 }

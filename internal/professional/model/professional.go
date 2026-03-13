@@ -10,6 +10,7 @@ type Professional struct {
 	Specialty string    `json:"specialty"`
 	Phone     string    `json:"phone"`
 	Email     string    `json:"email"`
+	Status    string    `json:"status"`
 	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 }
