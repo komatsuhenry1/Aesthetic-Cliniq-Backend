@@ -4,6 +4,7 @@ import (
 	"clinicprobackend/internal/professional/dto"
 	"clinicprobackend/internal/professional/model"
 	"clinicprobackend/internal/professional/repository"
+	"clinicprobackend/internal/utils"
 )
 
 type ProfessionalService interface {
@@ -23,6 +24,17 @@ func NewProfessionalService(repo repository.ProfessionalRepository) Professional
 }
 
 func (s *professionalService) CreateProfessional(requestDto *dto.ProfessionalRequestDTO, clinicId string) error {
+
+	normalizedEmail, err := utils.EmailRegex(requestDto.Email)
+	if err != nil {
+		return err
+	}
+
+	normalizedPhone, err := utils.ValidatePhone(requestDto.Phone)
+	if err != nil {
+		return err
+	}
+
 	status := requestDto.Status
 	if status == "" {
 		status = "ativo"
@@ -31,10 +43,10 @@ func (s *professionalService) CreateProfessional(requestDto *dto.ProfessionalReq
 	professional := model.Professional{
 		ClinicID:  clinicId,
 		UserID:    requestDto.UserID,
-		Name:      requestDto.Name,
-		Specialty: requestDto.Specialty,
-		Phone:     requestDto.Phone,
-		Email:     requestDto.Email,
+		Name:      utils.CapitalizeWords(requestDto.Name),
+		Specialty: utils.CapitalizeWords(requestDto.Specialty),
+		Phone:     normalizedPhone,
+		Email:     normalizedEmail,
 		Status:    status,
 	}
 	return s.professionalRepository.CreateProfessional(&professional)
