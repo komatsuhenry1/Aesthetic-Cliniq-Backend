@@ -117,3 +117,14 @@ func (h *AppointmentHandler) UpdateAppointment(c *gin.Context) {
 
 	utils.SendSuccessResponse(c, "Agendamento atualizado com sucesso.", appointment)
 }
+
+func (h *AppointmentHandler) DeleteAppointment(c *gin.Context) {
+	id := c.Param("id")
+
+	if err := h.service.DeleteAppointment(id); err != nil {
+		utils.SendErrorResponse(c, "Erro ao deletar agendamento", http.StatusInternalServerError)
+		return
+	}
+
+	utils.SendSuccessResponse(c, "Agendamento deletado com sucesso.", nil)
+}

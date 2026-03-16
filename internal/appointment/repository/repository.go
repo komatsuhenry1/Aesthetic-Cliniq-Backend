@@ -13,6 +13,7 @@ type AppointmentRepository interface {
 	GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error)
 	GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error)
 	UpdateAppointment(id string, updates map[string]interface{}) (*model.Appointment, error)
+	DeleteAppointment(id string) error
 }
 
 type appointmentRepository struct {
@@ -78,4 +79,12 @@ func (r *appointmentRepository) UpdateAppointment(id string, updates map[string]
 	}
 
 	return &appointment, nil
+}
+
+func (r *appointmentRepository) DeleteAppointment(id string) error {
+	var appointment model.Appointment
+	if err := r.db.First(&appointment, "id = ?", id).Error; err != nil {
+		return err
+	}
+	return r.db.Delete(&appointment).Error
 }

@@ -12,6 +12,7 @@ type AppointmentService interface {
 	GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error)
 	GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error)
 	UpdateAppointment(id string, updates map[string]interface{}) (*model.Appointment, error)
+	DeleteAppointment(id string) error
 }
 
 type appointmentService struct {
@@ -56,3 +57,6 @@ func (s *appointmentService) UpdateAppointment(id string, updates map[string]int
 	return s.appointmentRepository.UpdateAppointment(id, updates)
 }
 
+func (s *appointmentService) DeleteAppointment(id string) error {
+	return s.appointmentRepository.DeleteAppointment(id)
+}

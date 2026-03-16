@@ -16,5 +16,6 @@ func SetupAppointmentRoutes(r *gin.RouterGroup, container *di.Container) {
 		appointment.GET("/week", middleware.AuthUser(), container.AppointmentHandler.GetAppointmentsWeek)
 		appointment.GET("/next-five", middleware.AuthUser(), container.AppointmentHandler.GetNextFiveAppointments)
 		appointment.PATCH("/:id", middleware.AuthUser(), container.AppointmentHandler.UpdateAppointment)
+		appointment.DELETE("/:id", middleware.AuthUser(), container.AppointmentHandler.DeleteAppointment)
 	}
 }
