@@ -13,6 +13,7 @@ type ProfessionalService interface {
 	GetProfessionalByID(id string) (*model.Professional, error)
 	UpdateProfessionalPartial(id string, updates map[string]interface{}) (*model.Professional, error)
 	DeleteProfessional(id string) error
+	GetAllNamesAndIds() ([]dto.ProfessionalNamesAndIdsDTO, error)
 }
 
 type professionalService struct {
@@ -66,4 +67,8 @@ func (s *professionalService) UpdateProfessionalPartial(id string, updates map[s
 
 func (s *professionalService) DeleteProfessional(id string) error {
 	return s.professionalRepository.DeleteProfessional(id)
+}
+
+func (s *professionalService) GetAllNamesAndIds() ([]dto.ProfessionalNamesAndIdsDTO, error) {
+	return s.professionalRepository.GetAllNamesAndIds()
 }

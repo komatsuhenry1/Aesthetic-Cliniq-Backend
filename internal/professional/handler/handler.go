@@ -126,3 +126,13 @@ func (h *ProfessionalHandler) DeleteProfessional(c *gin.Context) {
 
 	utils.SendSuccessResponse(c, "Profissional deletado com sucesso.", nil)
 }
+
+func (h *ProfessionalHandler) GetAllNamesAndIds(c *gin.Context) {
+	professionals, err := h.service.GetAllNamesAndIds()
+	if err != nil {
+		utils.SendErrorResponse(c, "Erro ao buscar profissionais", http.StatusInternalServerError)
+		return
+	}
+
+	utils.SendSuccessResponse(c, "Profissionais encontrados com sucesso.", professionals)
+}

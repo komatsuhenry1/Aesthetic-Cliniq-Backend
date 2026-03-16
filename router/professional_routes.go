@@ -14,5 +14,6 @@ func SetupProfessionalRoutes(r *gin.RouterGroup, container *di.Container) {
 		professional.PATCH("/:id", middleware.AuthUser(), container.ProfessionalHandler.UpdateProfessional)
 		professional.POST("/", middleware.AuthUser(), container.ProfessionalHandler.CreateProfessional)
 		professional.DELETE("/:id", middleware.AuthUser(), container.ProfessionalHandler.DeleteProfessional)
+		professional.GET("/names-ids", middleware.AuthUser(), container.ProfessionalHandler.GetAllNamesAndIds)
 	}
 }

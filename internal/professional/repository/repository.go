@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"clinicprobackend/internal/professional/dto"
 	"clinicprobackend/internal/professional/model"
 
 	"gorm.io/gorm"
@@ -12,6 +13,7 @@ type ProfessionalRepository interface {
 	GetProfessionalByID(id string) (*model.Professional, error)
 	UpdateProfessionalPartial(id string, updates map[string]interface{}) (*model.Professional, error)
 	DeleteProfessional(id string) error
+	GetAllNamesAndIds() ([]dto.ProfessionalNamesAndIdsDTO, error)
 }
 
 type professionalRepository struct {
@@ -58,3 +60,13 @@ func (r *professionalRepository) UpdateProfessionalPartial(id string, updates ma
 func (r *professionalRepository) DeleteProfessional(id string) error {
 	return r.db.Delete(&model.Professional{}, "id = ?", id).Error
 }
+
+func (r *professionalRepository) GetAllNamesAndIds() ([]dto.ProfessionalNamesAndIdsDTO, error) {
+	var professionals []dto.ProfessionalNamesAndIdsDTO
+	if err := r.db.Table("professionals").Select("id", "name").Find(&professionals).Error; err != nil {
+		return nil, err
+	}
+
+	return professionals, nil
+}
+

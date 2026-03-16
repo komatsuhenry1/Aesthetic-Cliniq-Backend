@@ -11,6 +11,11 @@ type ProfessionalRequestDTO struct {
 	Status    string  `json:"status"`
 }
 
+type ProfessionalNamesAndIdsDTO struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
 func (p *ProfessionalRequestDTO) Validate() error {
 	if p.Name == "" {
 		return errors.New("name is required")
