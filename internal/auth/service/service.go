@@ -24,6 +24,30 @@ func NewUserService(userRepository repository.UserRepository) UserService {
 }
 
 func (s *userService) RegisterUser(userRequestDTO *dto.UserRequestDTO) error {
+	normalizedEmail, err := utils.EmailRegex(userRequestDTO.Email)
+	if err != nil {
+		return err
+	}
+
+	normalizedCPF, err := utils.ValidateCPF(userRequestDTO.Cpf)
+	if err != nil {
+		return err
+	}
+
+	normalizedPhone, err := utils.ValidatePhone(userRequestDTO.Phone)
+	if err != nil {
+		return err
+	}
+
+	// normalizedCEP, err := utils.ValidateCEP(userRequestDTO.CEP)
+	// if err != nil {
+	// 	return err
+	// }
+
+	if err := utils.ValidatePasswordRegex(userRequestDTO.Password); err != nil {
+		return err
+	}
+
 	userRequestDTO.Name = strings.ToLower(userRequestDTO.Name)
 	existingUser, err := s.userRepository.GetUserByUserNameOrEmail(userRequestDTO.Name, userRequestDTO.Email)
 	if err != nil {
@@ -41,10 +65,11 @@ func (s *userService) RegisterUser(userRequestDTO *dto.UserRequestDTO) error {
 
 	user := model.User{
 		Name:         utils.CapitalizeWords(userRequestDTO.Name),
-		Email:        userRequestDTO.Email,
+		Email:        normalizedEmail,
+		Cpf:          normalizedCPF,
 		Password:     userRequestDTO.Password,
 		Clinic:       userRequestDTO.Clinic,
-		Phone:        userRequestDTO.Phone,
+		Phone:        normalizedPhone,
 		Role:         "USER",
 	}
 

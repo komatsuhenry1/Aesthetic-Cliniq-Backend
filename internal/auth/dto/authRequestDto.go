@@ -6,6 +6,7 @@ type UserRequestDTO struct {
 	Email    string `json:"email" binding:"required"`
 	Name     string `json:"name" binding:"required"`
 	Password string `json:"password" binding:"required"`
+	Cpf      string `json:"cpf" binding:"required"`
 	Clinic   string `json:"clinic" binding:"required"`
 	Phone    string `json:"phone" binding:"required"`
 }
