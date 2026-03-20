@@ -54,3 +54,8 @@ type AppointmentResponseDTO struct {
 	Professional     string    `json:"professional"`
 	Status           string    `json:"status"`
 }
+
+type AppointmentCountDTO struct {
+	Date  string `json:"date"`
+	Count int    `json:"count"`
+}

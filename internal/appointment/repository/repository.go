@@ -11,6 +11,7 @@ type AppointmentRepository interface {
 	CreateAppointment(appointment *model.Appointment) error
 	GetAppointmentsByDate(date string) ([]dto.AppointmentResponseDTO, error)
 	GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error)
+	GetAppointmentCountsByMonth(yearMonth string) ([]dto.AppointmentCountDTO, error)
 	GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error)
 	UpdateAppointment(id string, updates map[string]interface{}) (*model.Appointment, error)
 	DeleteAppointment(id string) error
@@ -52,6 +53,19 @@ func (r *appointmentRepository) GetAppointmentsWeek(startDate string, endDate st
 		Scan(&appointments).Error
 
 	return appointments, err
+}
+
+func (r *appointmentRepository) GetAppointmentCountsByMonth(yearMonth string) ([]dto.AppointmentCountDTO, error) {
+	var counts []dto.AppointmentCountDTO
+
+	err := r.db.Table("appointments").
+		Select("TO_CHAR(DATE(start_time), 'YYYY-MM-DD') as date, count(*) as count").
+		Where("TO_CHAR(start_time, 'YYYY-MM') = ?", yearMonth).
+		Group("DATE(start_time)").
+		Order("DATE(start_time) ASC").
+		Scan(&counts).Error
+
+	return counts, err
 }
 
 func (r *appointmentRepository) GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error) {

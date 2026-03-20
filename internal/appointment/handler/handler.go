@@ -112,6 +112,34 @@ func (h *AppointmentHandler) GetAppointmentsWeek(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Agendamentos do período", appointments)
 }
 
+// GetAppointmentCountsByMonth godoc
+// @Summary      Get appointment counts by month
+// @Description  Retrieves the number of appointments per day for a specific month
+// @Tags         Appointments
+// @Produce      json
+// @Param        month query     string  true  "Month (YYYY-MM)"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      400  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /appointment/month-count [get]
+func (h *AppointmentHandler) GetAppointmentCountsByMonth(c *gin.Context) {
+	monthStr := c.Query("month")
+
+	if monthStr == "" {
+		utils.SendErrorResponse(c, "Mês não informado. Ex: /appointment/month-count?month=2026-03", http.StatusBadRequest)
+		return
+	}
+
+	counts, err := h.service.GetAppointmentCountsByMonth(monthStr)
+	if err != nil {
+		utils.SendErrorResponse(c, "Erro ao buscar contagens do mês", http.StatusInternalServerError)
+		return
+	}
+
+	utils.SendSuccessResponse(c, "Contagens do mês "+monthStr, counts)
+}
+
 // GetNextFiveAppointments godoc
 // @Summary      Get next five appointments
 // @Description  Retrieves the next 5 upcoming appointments

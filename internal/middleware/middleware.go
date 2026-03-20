@@ -80,7 +80,7 @@ func AuthUser() gin.HandlerFunc {
 		c.Set("claims", claims)
 		c.Next()
 	}
-}
+}	
 
 func getClient(ip string) *rate.Limiter {
 	mu.Lock()
