@@ -10,6 +10,7 @@ import (
 type AppointmentService interface {
 	CreateAppointment(requestDto *dto.AppointmentRequestDTO) error
 	GetAppointmentsByDate(date string) ([]dto.AppointmentResponseDTO, error)
+	GetAppointmentsByDateAndProfessional(date string, professionalId string) ([]dto.AppointmentResponseDTO, error)
 	GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error)
 	GetAppointmentCountsByMonth(yearMonth string) ([]dto.AppointmentCountDTO, error)
 	GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error)
@@ -52,6 +53,10 @@ func (s *appointmentService) GetAppointmentsByDate(date string) ([]dto.Appointme
 
 func (s *appointmentService) GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error) {
 	return s.appointmentRepository.GetAppointmentsWeek(startDate, endDate)
+}
+
+func (s *appointmentService) GetAppointmentsByDateAndProfessional(date string, professionalId string) ([]dto.AppointmentResponseDTO, error) {
+	return s.appointmentRepository.GetAppointmentsByDateAndProfessional(date, professionalId)
 }
 
 func (s *appointmentService) GetAppointmentCountsByMonth(yearMonth string) ([]dto.AppointmentCountDTO, error) {

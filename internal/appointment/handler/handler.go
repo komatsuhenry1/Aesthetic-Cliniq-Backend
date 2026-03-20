@@ -112,6 +112,36 @@ func (h *AppointmentHandler) GetAppointmentsWeek(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Agendamentos do período", appointments)
 }
 
+// GetAppointmentsByDateAndProfessional godoc
+// @Summary      Get appointments by date and professional
+// @Description  Retrieves appointments for a specific day and professional
+// @Tags         Appointments
+// @Produce      json
+// @Param        date query     string  true  "Date (YYYY-MM-DD)"
+// @Param        professional_id query string true "Professional ID"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      400  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /appointment/professional-day [get]
+func (h *AppointmentHandler) GetAppointmentsByDateAndProfessional(c *gin.Context) {
+	dateStr := c.Query("date")
+	professionalId := c.Query("professional_id")
+
+	if dateStr == "" || professionalId == "" {
+		utils.SendErrorResponse(c, "Data ou Profissional não informados. Ex: /appointment/professional-day?date=2026-03-05&professional_id=uuid", http.StatusBadRequest)
+		return
+	}
+
+	appointments, err := h.service.GetAppointmentsByDateAndProfessional(dateStr, professionalId)
+	if err != nil {
+		utils.SendErrorResponse(c, "Erro ao buscar agendamentos do profissional no dia", http.StatusInternalServerError)
+		return
+	}
+
+	utils.SendSuccessResponse(c, "Agendamentos do profissional no dia "+dateStr, appointments)
+}
+
 // GetAppointmentCountsByMonth godoc
 // @Summary      Get appointment counts by month
 // @Description  Retrieves the number of appointments per day for a specific month

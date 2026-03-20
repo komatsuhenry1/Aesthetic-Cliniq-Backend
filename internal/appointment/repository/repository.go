@@ -10,6 +10,7 @@ import (
 type AppointmentRepository interface {
 	CreateAppointment(appointment *model.Appointment) error
 	GetAppointmentsByDate(date string) ([]dto.AppointmentResponseDTO, error)
+	GetAppointmentsByDateAndProfessional(date string, professionalId string) ([]dto.AppointmentResponseDTO, error)
 	GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error)
 	GetAppointmentCountsByMonth(yearMonth string) ([]dto.AppointmentCountDTO, error)
 	GetNextFiveAppointments() ([]dto.AppointmentResponseDTO, error)
@@ -49,6 +50,19 @@ func (r *appointmentRepository) GetAppointmentsWeek(startDate string, endDate st
 		Select("appointments.start_time, appointments.end_time, appointments.price, appointments.payment_method, appointments.patient_name as patient_name, appointments.procedure, appointments.professional_name as professional_name, appointments.status").
 		Joins("LEFT JOIN users ON users.id = appointments.professional_id").
 		Where("appointments.start_time >= ? AND appointments.start_time <= ?", startDate, endDate).
+		Order("appointments.start_time ASC").
+		Scan(&appointments).Error
+
+	return appointments, err
+}
+
+func (r *appointmentRepository) GetAppointmentsByDateAndProfessional(date string, professionalId string) ([]dto.AppointmentResponseDTO, error) {
+	var appointments []dto.AppointmentResponseDTO
+
+	err := r.db.Table("appointments").
+		Select("appointments.start_time, appointments.end_time, appointments.price, appointments.payment_method, appointments.patient_name as patient_name, appointments.procedure, appointments.professional_name as professional_name, appointments.status").
+		Joins("LEFT JOIN users ON users.id = appointments.professional_id").
+		Where("DATE(appointments.start_time) = ? AND appointments.professional_id = ?", date, professionalId).
 		Order("appointments.start_time ASC").
 		Scan(&appointments).Error
 
