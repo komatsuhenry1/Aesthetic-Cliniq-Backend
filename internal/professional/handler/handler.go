@@ -36,6 +36,19 @@ func GetClinicId(c *gin.Context) string {
 	return clinicId
 }
 
+// CreateProfessional godoc
+// @Summary      Create a new professional
+// @Description  Creates a professional record
+// @Tags         Professionals
+// @Accept       json
+// @Produce      json
+// @Param        professional body dto.ProfessionalRequestDTO true "Professional Data"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      400  {object}  map[string]interface{}
+// @Failure      401  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /professionals [post]
 func (h *ProfessionalHandler) CreateProfessional(c *gin.Context) {
 	var requestDto dto.ProfessionalRequestDTO
 
@@ -63,6 +76,15 @@ func (h *ProfessionalHandler) CreateProfessional(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Profissional criado com sucesso.", nil)
 }
 
+// GetAllProfessionals godoc
+// @Summary      Get all professionals
+// @Description  Retrieves a list of all professionals
+// @Tags         Professionals
+// @Produce      json
+// @Success      200  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /professionals [get]
 func (h *ProfessionalHandler) GetAllProfessionals(c *gin.Context) {
 	professionals, err := h.service.GetAllProfessionals()
 	if err != nil {
@@ -73,6 +95,16 @@ func (h *ProfessionalHandler) GetAllProfessionals(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Profissionais encontrados com sucesso.", professionals)
 }
 
+// GetProfessionalByID godoc
+// @Summary      Get a professional by ID
+// @Description  Retrieves a professional by its ID
+// @Tags         Professionals
+// @Produce      json
+// @Param        id   path      string  true  "Professional ID"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      404  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /professionals/{id} [get]
 func (h *ProfessionalHandler) GetProfessionalByID(c *gin.Context) {
 	id := c.Param("id")
 
@@ -85,6 +117,18 @@ func (h *ProfessionalHandler) GetProfessionalByID(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Profissional encontrado com sucesso.", professional)
 }
 
+// UpdateProfessional godoc
+// @Summary      Update a professional
+// @Description  Partially updates a professional record
+// @Tags         Professionals
+// @Accept       json
+// @Produce      json
+// @Param        id   path      string  true  "Professional ID"
+// @Param        updates body   map[string]interface{} true "Updates"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      400  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /professionals/{id} [patch]
 func (h *ProfessionalHandler) UpdateProfessional(c *gin.Context) {
 	id := c.Param("id")
 
@@ -116,6 +160,16 @@ func (h *ProfessionalHandler) UpdateProfessional(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Profissional atualizado com sucesso.", professional)
 }
 
+// DeleteProfessional godoc
+// @Summary      Delete a professional
+// @Description  Deletes a professional record
+// @Tags         Professionals
+// @Produce      json
+// @Param        id   path      string  true  "Professional ID"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /professionals/{id} [delete]
 func (h *ProfessionalHandler) DeleteProfessional(c *gin.Context) {
 	id := c.Param("id")
 
@@ -127,6 +181,15 @@ func (h *ProfessionalHandler) DeleteProfessional(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Profissional deletado com sucesso.", nil)
 }
 
+// GetAllNamesAndIds godoc
+// @Summary      Get all professional names and IDs
+// @Description  Retrieves a lightweight list of professional names and IDs
+// @Tags         Professionals
+// @Produce      json
+// @Success      200  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /professionals/names [get]
 func (h *ProfessionalHandler) GetAllNamesAndIds(c *gin.Context) {
 	professionals, err := h.service.GetAllNamesAndIds()
 	if err != nil {

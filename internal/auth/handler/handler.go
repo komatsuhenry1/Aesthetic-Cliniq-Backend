@@ -18,6 +18,17 @@ func NewUserHandler(service service.UserService) *UserHandler {
 }
 
 
+// RegisterUser godoc
+// @Summary      Register a new user
+// @Description  Registers a new user and creates their clinic
+// @Tags         Auth
+// @Accept       json
+// @Produce      json
+// @Param        user body dto.UserRequestDTO true "User Data"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      400  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Router       /auth/register [post]
 func (h *UserHandler) RegisterUser(c *gin.Context) {
 	var userRequestDto dto.UserRequestDTO
 
@@ -40,6 +51,16 @@ func (h *UserHandler) RegisterUser(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Usuário registrado com sucesso.", nil)
 }
 
+// LoginUser godoc
+// @Summary      Login user
+// @Description  Authenticates a user and returns a token
+// @Tags         Auth
+// @Accept       json
+// @Produce      json
+// @Param        credentials body dto.LoginRequestDTO true "Login Credentials"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      400  {object}  map[string]interface{}
+// @Router       /auth/login [post]
 func (h *UserHandler) LoginUser(c *gin.Context) {
 	var loginRequestDTO dto.LoginRequestDTO
 	if err := c.ShouldBindJSON(&loginRequestDTO); err != nil {

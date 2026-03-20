@@ -6,6 +6,15 @@ import (
 	"os"
 )
 
+// @title           ClinicPro API
+// @version         1.0
+// @description     API backend in Go for ClinicPro.
+// @host            localhost:8080
+// @BasePath        /api/v1
+//
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 func main() {
 	// go middleware.CleanupClients()
 	if err := config.ConnectDB(); err != nil {

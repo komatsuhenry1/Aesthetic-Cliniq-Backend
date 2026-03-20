@@ -6,6 +6,11 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	_ "clinicprobackend/docs"
 )
 
 func InitRouter() *gin.Engine {
@@ -27,6 +32,9 @@ func InitRouter() *gin.Engine {
 	}))
 
 	api := router.Group("/api/v1")
+
+	// Swagger route
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	SetupAuthRoutes(api, container)
 	SetupAppointmentRoutes(api, container)

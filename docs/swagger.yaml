@@ -1,0 +1,580 @@
+basePath: /api/v1
+definitions:
+  clinicprobackend_internal_auth_dto.LoginRequestDTO:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  clinicprobackend_internal_auth_dto.UserRequestDTO:
+    properties:
+      clinic:
+        type: string
+      cpf:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+    required:
+    - clinic
+    - cpf
+    - email
+    - name
+    - password
+    - phone
+    type: object
+  dto.AppointmentRequestDTO:
+    properties:
+      client_id:
+        type: string
+      end_time:
+        type: string
+      notes:
+        type: string
+      patient_name:
+        type: string
+      payment_method:
+        type: string
+      price:
+        type: number
+      procedure:
+        type: string
+      professional_id:
+        type: string
+      professional_name:
+        type: string
+      start_time:
+        type: string
+    required:
+    - client_id
+    - end_time
+    - notes
+    - patient_name
+    - payment_method
+    - price
+    - procedure
+    - professional_id
+    - professional_name
+    - start_time
+    type: object
+  dto.ProfessionalRequestDTO:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      specialty:
+        type: string
+      status:
+        type: string
+      user_id:
+        type: string
+    required:
+    - email
+    - name
+    - phone
+    - specialty
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API backend in Go for ClinicPro.
+  title: ClinicPro API
+  version: "1.0"
+paths:
+  /appointment/:
+    post:
+      consumes:
+      - application/json
+      description: Creates an appointment record
+      parameters:
+      - description: Appointment Data
+        in: body
+        name: appointment
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AppointmentRequestDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new appointment
+      tags:
+      - Appointments
+  /appointment/{id}:
+    delete:
+      description: Deletes an appointment record
+      parameters:
+      - description: Appointment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete an appointment
+      tags:
+      - Appointments
+    patch:
+      consumes:
+      - application/json
+      description: Partially updates an appointment record
+      parameters:
+      - description: Appointment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updates
+        in: body
+        name: updates
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update an appointment
+      tags:
+      - Appointments
+  /appointment/day:
+    get:
+      description: Retrieves appointments for a specific day
+      parameters:
+      - description: Date (YYYY-MM-DD)
+        in: query
+        name: date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get appointments by date
+      tags:
+      - Appointments
+  /appointment/next-five:
+    get:
+      description: Retrieves the next 5 upcoming appointments
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get next five appointments
+      tags:
+      - Appointments
+  /appointment/week:
+    get:
+      description: Retrieves appointments within a date range
+      parameters:
+      - description: Start Date (YYYY-MM-DD)
+        in: query
+        name: start_date
+        required: true
+        type: string
+      - description: End Date (YYYY-MM-DD)
+        in: query
+        name: end_date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get appointments for a week
+      tags:
+      - Appointments
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates a user and returns a token
+      parameters:
+      - description: Login Credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/clinicprobackend_internal_auth_dto.LoginRequestDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Login user
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Registers a new user and creates their clinic
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/clinicprobackend_internal_auth_dto.UserRequestDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Register a new user
+      tags:
+      - Auth
+  /professionals:
+    get:
+      description: Retrieves a list of all professionals
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get all professionals
+      tags:
+      - Professionals
+    post:
+      consumes:
+      - application/json
+      description: Creates a professional record
+      parameters:
+      - description: Professional Data
+        in: body
+        name: professional
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProfessionalRequestDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new professional
+      tags:
+      - Professionals
+  /professionals/{id}:
+    delete:
+      description: Deletes a professional record
+      parameters:
+      - description: Professional ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete a professional
+      tags:
+      - Professionals
+    get:
+      description: Retrieves a professional by its ID
+      parameters:
+      - description: Professional ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get a professional by ID
+      tags:
+      - Professionals
+    patch:
+      consumes:
+      - application/json
+      description: Partially updates a professional record
+      parameters:
+      - description: Professional ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updates
+        in: body
+        name: updates
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update a professional
+      tags:
+      - Professionals
+  /professionals/names:
+    get:
+      description: Retrieves a lightweight list of professional names and IDs
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get all professional names and IDs
+      tags:
+      - Professionals
+  /user/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Partially updates a user record
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updates
+        in: body
+        name: updates
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update a user
+      tags:
+      - Users
+  /user/professionals:
+    get:
+      description: Retrieves users with the PROFESSIONAL role
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get all professional users
+      tags:
+      - Users
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

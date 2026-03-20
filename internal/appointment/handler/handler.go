@@ -19,6 +19,19 @@ func NewAppointmentHandler(s service.AppointmentService) *AppointmentHandler {
 	return &AppointmentHandler{service: s}
 }
 
+// CreateAppointment godoc
+// @Summary      Create a new appointment
+// @Description  Creates an appointment record
+// @Tags         Appointments
+// @Accept       json
+// @Produce      json
+// @Param        appointment body dto.AppointmentRequestDTO true "Appointment Data"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      400  {object}  map[string]interface{}
+// @Failure      401  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /appointment/ [post]
 func (h *AppointmentHandler) CreateAppointment(c *gin.Context) {
 	var requestDto dto.AppointmentRequestDTO
 
@@ -41,6 +54,17 @@ func (h *AppointmentHandler) CreateAppointment(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Agendamento criado com sucesso.", nil)
 }
 
+// GetAppointmentsByDate godoc
+// @Summary      Get appointments by date
+// @Description  Retrieves appointments for a specific day
+// @Tags         Appointments
+// @Produce      json
+// @Param        date query     string  true  "Date (YYYY-MM-DD)"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      400  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /appointment/day [get]
 func (h *AppointmentHandler) GetAppointmentsByDate(c *gin.Context) {
 	dateStr := c.Query("date")
 
@@ -58,6 +82,18 @@ func (h *AppointmentHandler) GetAppointmentsByDate(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Agendamentos do dia "+dateStr, appointments)
 }
 
+// GetAppointmentsWeek godoc
+// @Summary      Get appointments for a week
+// @Description  Retrieves appointments within a date range
+// @Tags         Appointments
+// @Produce      json
+// @Param        start_date query     string  true  "Start Date (YYYY-MM-DD)"
+// @Param        end_date   query     string  true  "End Date (YYYY-MM-DD)"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      400  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /appointment/week [get]
 func (h *AppointmentHandler) GetAppointmentsWeek(c *gin.Context) {
 	startDate := c.Query("start_date")
 	endDate := c.Query("end_date")
@@ -76,6 +112,15 @@ func (h *AppointmentHandler) GetAppointmentsWeek(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Agendamentos do período", appointments)
 }
 
+// GetNextFiveAppointments godoc
+// @Summary      Get next five appointments
+// @Description  Retrieves the next 5 upcoming appointments
+// @Tags         Appointments
+// @Produce      json
+// @Success      200  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /appointment/next-five [get]
 func (h *AppointmentHandler) GetNextFiveAppointments(c *gin.Context) {
 	appointments, err := h.service.GetNextFiveAppointments()
 	fmt.Println(appointments)
@@ -87,6 +132,18 @@ func (h *AppointmentHandler) GetNextFiveAppointments(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Próximos 5 agendamentos.", appointments)
 }
 
+// UpdateAppointment godoc
+// @Summary      Update an appointment
+// @Description  Partially updates an appointment record
+// @Tags         Appointments
+// @Accept       json
+// @Produce      json
+// @Param        id   path      string  true  "Appointment ID"
+// @Param        updates body   map[string]interface{} true "Updates"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      400  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /appointment/{id} [patch]
 func (h *AppointmentHandler) UpdateAppointment(c *gin.Context) {
 	appointmentId := c.Param("id")
 
@@ -118,6 +175,16 @@ func (h *AppointmentHandler) UpdateAppointment(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Agendamento atualizado com sucesso.", appointment)
 }
 
+// DeleteAppointment godoc
+// @Summary      Delete an appointment
+// @Description  Deletes an appointment record
+// @Tags         Appointments
+// @Produce      json
+// @Param        id   path      string  true  "Appointment ID"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /appointment/{id} [delete]
 func (h *AppointmentHandler) DeleteAppointment(c *gin.Context) {
 	id := c.Param("id")
 

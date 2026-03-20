@@ -19,6 +19,15 @@ func NewUserHandler(service service.UserService) *UserHandler {
 	return &UserHandler{service: service}
 }
 
+// GetProfessionals godoc
+// @Summary      Get all professional users
+// @Description  Retrieves users with the PROFESSIONAL role
+// @Tags         Users
+// @Produce      json
+// @Success      200  {object}  map[string]interface{}
+// @Failure      500  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /user/professionals [get]
 func (h *UserHandler) GetProfessionals(c *gin.Context) {
 	professionals, err := h.service.GetProfessionals()
 	if err != nil {
@@ -29,6 +38,18 @@ func (h *UserHandler) GetProfessionals(c *gin.Context) {
 	utils.SendSuccessResponse(c, "Profissionais encontrados com sucesso", professionals)
 }
 
+// UpdateUser godoc
+// @Summary      Update a user
+// @Description  Partially updates a user record
+// @Tags         Users
+// @Accept       json
+// @Produce      json
+// @Param        id   path      string  true  "User ID"
+// @Param        updates body   map[string]interface{} true "Updates"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      400  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /user/{id} [patch]
 func (h *UserHandler) UpdateUser(c *gin.Context) {
 	userId := c.Param("id")
 
