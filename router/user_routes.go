@@ -10,7 +10,7 @@ import (
 func SetupUserRoutes(r *gin.RouterGroup, container *di.Container) {
 	user := r.Group("/user")
 	{
-		user.GET("/professionals", middleware.AuthUser(), container.UserHandler.GetProfessionals)
-		user.PATCH("/:id", middleware.AuthUser(), container.UserHandler.UpdateUser)
+		user.GET("/professionals", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.UserHandler.GetProfessionals)
+		user.PATCH("/:id", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.UserHandler.UpdateUser)
 	}
 }

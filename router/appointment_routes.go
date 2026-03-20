@@ -11,13 +11,13 @@ import (
 func SetupAppointmentRoutes(r *gin.RouterGroup, container *di.Container) {
 	appointment := r.Group("/appointment")
 	{
-		appointment.POST("/", middleware.AuthUser(), container.AppointmentHandler.CreateAppointment)
-		appointment.GET("/day", middleware.AuthUser(), container.AppointmentHandler.GetAppointmentsByDate)
-		appointment.GET("/professional-day", middleware.AuthUser(), container.AppointmentHandler.GetAppointmentsByDateAndProfessional)
-		appointment.GET("/week", middleware.AuthUser(), container.AppointmentHandler.GetAppointmentsWeek)
-		appointment.GET("/month-count", middleware.AuthUser(), container.AppointmentHandler.GetAppointmentCountsByMonth)
-		appointment.GET("/next-five", middleware.AuthUser(), container.AppointmentHandler.GetNextFiveAppointments)
-		appointment.PATCH("/:id", middleware.AuthUser(), container.AppointmentHandler.UpdateAppointment)
-		appointment.DELETE("/:id", middleware.AuthUser(), container.AppointmentHandler.DeleteAppointment)
+		appointment.POST("/", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.AppointmentHandler.CreateAppointment)
+		appointment.GET("/day", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.AppointmentHandler.GetAppointmentsByDate)
+		appointment.GET("/professional-day", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.AppointmentHandler.GetAppointmentsByDateAndProfessional)
+		appointment.GET("/week", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.AppointmentHandler.GetAppointmentsWeek)
+		appointment.GET("/month-count", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.AppointmentHandler.GetAppointmentCountsByMonth)
+		appointment.GET("/next-five", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.AppointmentHandler.GetNextFiveAppointments)
+		appointment.PATCH("/:id", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.AppointmentHandler.UpdateAppointment)
+		appointment.DELETE("/:id", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.AppointmentHandler.DeleteAppointment)
 	}
 }

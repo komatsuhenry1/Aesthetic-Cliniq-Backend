@@ -10,10 +10,10 @@ import (
 func SetupProfessionalRoutes(r *gin.RouterGroup, container *di.Container) {
 	professional  := r.Group("/professional")
 	{
-		professional.GET("/", middleware.AuthUser(), container.ProfessionalHandler.GetAllProfessionals)
-		professional.PATCH("/:id", middleware.AuthUser(), container.ProfessionalHandler.UpdateProfessional)
-		professional.POST("/", middleware.AuthUser(), container.ProfessionalHandler.CreateProfessional)
-		professional.DELETE("/:id", middleware.AuthUser(), container.ProfessionalHandler.DeleteProfessional)
-		professional.GET("/names-ids", middleware.AuthUser(), container.ProfessionalHandler.GetAllNamesAndIds)
+		professional.GET("/", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.ProfessionalHandler.GetAllProfessionals)
+		professional.PATCH("/:id", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.ProfessionalHandler.UpdateProfessional)
+		professional.POST("/", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.ProfessionalHandler.CreateProfessional)
+		professional.DELETE("/:id", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.ProfessionalHandler.DeleteProfessional)
+		professional.GET("/names-ids", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.ProfessionalHandler.GetAllNamesAndIds)
 	}
 }
