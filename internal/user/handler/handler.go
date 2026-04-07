@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"clinicprobackend/internal/user/service"
-	"clinicprobackend/internal/utils"
+	"aestheticcliniq/internal/user/service"
+	"aestheticcliniq/internal/utils"
 	"net/http"
 
 	"fmt"

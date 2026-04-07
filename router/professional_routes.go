@@ -1,8 +1,8 @@
 package router
 
 import (
-	"clinicprobackend/internal/di"
-	"clinicprobackend/internal/middleware"
+	"aestheticcliniq/internal/di"
+	"aestheticcliniq/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )

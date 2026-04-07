@@ -1,7 +1,7 @@
 package router
 
 import (
-	"clinicprobackend/internal/di"
+	"aestheticcliniq/internal/di"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -10,7 +10,7 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	_ "clinicprobackend/docs"
+	_ "aestheticcliniq/docs"
 )
 
 func InitRouter() *gin.Engine {

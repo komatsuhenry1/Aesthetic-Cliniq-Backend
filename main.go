@@ -1,14 +1,14 @@
 package main
 
 import (
-	"clinicprobackend/config"
-	"clinicprobackend/router"
+	"aestheticcliniq/config"
+	"aestheticcliniq/router"
 	"os"
 )
 
-// @title           ClinicPro API
+// @title           AestheticCliniq API
 // @version         1.0
-// @description     API backend in Go for ClinicPro.
+// @description     API backend in Go for AestheticCliniq.
 // @host            localhost:8080
 // @BasePath        /api/v1
 //

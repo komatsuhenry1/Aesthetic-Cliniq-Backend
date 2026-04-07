@@ -1,11 +1,11 @@
 package handler
 
 import (
-	"clinicprobackend/internal/auth/service"
+	"aestheticcliniq/internal/auth/service"
 
 	"github.com/gin-gonic/gin"
-	"clinicprobackend/internal/auth/dto"
-	"clinicprobackend/internal/utils"
+	"aestheticcliniq/internal/auth/dto"
+	"aestheticcliniq/internal/utils"
 	"net/http"
 )
 

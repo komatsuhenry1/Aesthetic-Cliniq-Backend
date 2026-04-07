@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"clinicprobackend/internal/user/model"
+	"aestheticcliniq/internal/user/model"
 	"errors"
 
 	"gorm.io/gorm"

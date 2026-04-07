@@ -2,7 +2,7 @@
 package router
 
 import (
-	"clinicprobackend/internal/di"
+	"aestheticcliniq/internal/di"
 
 	"github.com/gin-gonic/gin"
 )

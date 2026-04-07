@@ -1,8 +1,8 @@
 package service
 
 import (
-	"clinicprobackend/internal/user/model"
-	"clinicprobackend/internal/user/repository"
+	"aestheticcliniq/internal/user/model"
+	"aestheticcliniq/internal/user/repository"
 )
 
 type UserService interface {

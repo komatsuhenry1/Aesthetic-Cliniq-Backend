@@ -1,18 +1,18 @@
 package di
 
 import (
-	"clinicprobackend/config"
-	appointmentHandler "clinicprobackend/internal/appointment/handler"
-	appointmentRepository "clinicprobackend/internal/appointment/repository"
-	appointmentService "clinicprobackend/internal/appointment/service"
-	authHandler "clinicprobackend/internal/auth/handler"
-	authService "clinicprobackend/internal/auth/service"
-	userHandler "clinicprobackend/internal/user/handler"
-	userRepository "clinicprobackend/internal/user/repository"
-	userService "clinicprobackend/internal/user/service"
-	professionalHandler "clinicprobackend/internal/professional/handler"
-	professionalRepository "clinicprobackend/internal/professional/repository"
-	professionalService "clinicprobackend/internal/professional/service"
+	"aestheticcliniq/config"
+	appointmentHandler "aestheticcliniq/internal/appointment/handler"
+	appointmentRepository "aestheticcliniq/internal/appointment/repository"
+	appointmentService "aestheticcliniq/internal/appointment/service"
+	authHandler "aestheticcliniq/internal/auth/handler"
+	authService "aestheticcliniq/internal/auth/service"
+	userHandler "aestheticcliniq/internal/user/handler"
+	userRepository "aestheticcliniq/internal/user/repository"
+	userService "aestheticcliniq/internal/user/service"
+	professionalHandler "aestheticcliniq/internal/professional/handler"
+	professionalRepository "aestheticcliniq/internal/professional/repository"
+	professionalService "aestheticcliniq/internal/professional/service"
 )
 
 type Container struct {

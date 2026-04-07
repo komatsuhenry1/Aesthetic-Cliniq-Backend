@@ -1,6 +1,6 @@
 basePath: /api/v1
 definitions:
-  clinicprobackend_internal_auth_dto.LoginRequestDTO:
+  aestheticcliniq_internal_auth_dto.LoginRequestDTO:
     properties:
       email:
         type: string
@@ -10,7 +10,7 @@ definitions:
     - email
     - password
     type: object
-  clinicprobackend_internal_auth_dto.UserRequestDTO:
+  aestheticcliniq_internal_auth_dto.UserRequestDTO:
     properties:
       clinic:
         type: string
@@ -89,8 +89,8 @@ definitions:
 host: localhost:8080
 info:
   contact: {}
-  description: API backend in Go for ClinicPro.
-  title: ClinicPro API
+  description: API backend in Go for AestheticCliniq.
+  title: AestheticCliniq API
   version: "1.0"
 paths:
   /appointment/:
@@ -296,7 +296,7 @@ paths:
         name: credentials
         required: true
         schema:
-          $ref: '#/definitions/clinicprobackend_internal_auth_dto.LoginRequestDTO'
+          $ref: '#/definitions/aestheticcliniq_internal_auth_dto.LoginRequestDTO'
       produces:
       - application/json
       responses:
@@ -324,7 +324,7 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/clinicprobackend_internal_auth_dto.UserRequestDTO'
+          $ref: '#/definitions/aestheticcliniq_internal_auth_dto.UserRequestDTO'
       produces:
       - application/json
       responses:

@@ -1,4 +1,4 @@
-module clinicprobackend
+module aestheticcliniq
 
 go 1.25.0
 

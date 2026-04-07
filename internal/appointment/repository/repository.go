@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"clinicprobackend/internal/appointment/dto"
-	"clinicprobackend/internal/appointment/model"
+	"aestheticcliniq/internal/appointment/dto"
+	"aestheticcliniq/internal/appointment/model"
 
 	"gorm.io/gorm"
 )

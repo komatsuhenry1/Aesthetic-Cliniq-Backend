@@ -329,7 +329,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/clinicprobackend_internal_auth_dto.LoginRequestDTO"
+                            "$ref": "#/definitions/aestheticcliniq_internal_auth_dto.LoginRequestDTO"
                         }
                     }
                 ],
@@ -371,7 +371,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/clinicprobackend_internal_auth_dto.UserRequestDTO"
+                            "$ref": "#/definitions/aestheticcliniq_internal_auth_dto.UserRequestDTO"
                         }
                     }
                 ],
@@ -750,7 +750,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "clinicprobackend_internal_auth_dto.LoginRequestDTO": {
+        "aestheticcliniq_internal_auth_dto.LoginRequestDTO": {
             "type": "object",
             "required": [
                 "email",
@@ -765,7 +765,7 @@ const docTemplate = `{
                 }
             }
         },
-        "clinicprobackend_internal_auth_dto.UserRequestDTO": {
+        "aestheticcliniq_internal_auth_dto.UserRequestDTO": {
             "type": "object",
             "required": [
                 "clinic",
@@ -888,8 +888,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "ClinicPro API",
-	Description:      "API backend in Go for ClinicPro.",
+	Title:            "AestheticCliniq API",
+	Description:      "API backend in Go for AestheticCliniq.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"clinicprobackend/internal/appointment/dto"
-	"clinicprobackend/internal/appointment/service"
-	"clinicprobackend/internal/utils"
+	"aestheticcliniq/internal/appointment/dto"
+	"aestheticcliniq/internal/appointment/service"
+	"aestheticcliniq/internal/utils"
 	"fmt"
 	"net/http"
 	"strings"

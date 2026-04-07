@@ -1,10 +1,10 @@
 package service
 
 import (
-	"clinicprobackend/internal/appointment/dto"
-	"clinicprobackend/internal/appointment/model"
-	"clinicprobackend/internal/appointment/repository"
-	"clinicprobackend/internal/utils"
+	"aestheticcliniq/internal/appointment/dto"
+	"aestheticcliniq/internal/appointment/model"
+	"aestheticcliniq/internal/appointment/repository"
+	"aestheticcliniq/internal/utils"
 )
 
 type AppointmentService interface {

@@ -1,10 +1,10 @@
 package service
 
 import (
-	"clinicprobackend/internal/professional/dto"
-	"clinicprobackend/internal/professional/model"
-	"clinicprobackend/internal/professional/repository"
-	"clinicprobackend/internal/utils"
+	"aestheticcliniq/internal/professional/dto"
+	"aestheticcliniq/internal/professional/model"
+	"aestheticcliniq/internal/professional/repository"
+	"aestheticcliniq/internal/utils"
 )
 
 type ProfessionalService interface {

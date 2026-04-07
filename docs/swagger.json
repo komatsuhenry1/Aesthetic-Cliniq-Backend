@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "API backend in Go for ClinicPro.",
-        "title": "ClinicPro API",
+        "description": "API backend in Go for AestheticCliniq.",
+        "title": "AestheticCliniq API",
         "contact": {},
         "version": "1.0"
     },
@@ -323,7 +323,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/clinicprobackend_internal_auth_dto.LoginRequestDTO"
+                            "$ref": "#/definitions/aestheticcliniq_internal_auth_dto.LoginRequestDTO"
                         }
                     }
                 ],
@@ -365,7 +365,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/clinicprobackend_internal_auth_dto.UserRequestDTO"
+                            "$ref": "#/definitions/aestheticcliniq_internal_auth_dto.UserRequestDTO"
                         }
                     }
                 ],
@@ -744,7 +744,7 @@
         }
     },
     "definitions": {
-        "clinicprobackend_internal_auth_dto.LoginRequestDTO": {
+        "aestheticcliniq_internal_auth_dto.LoginRequestDTO": {
             "type": "object",
             "required": [
                 "email",
@@ -759,7 +759,7 @@
                 }
             }
         },
-        "clinicprobackend_internal_auth_dto.UserRequestDTO": {
+        "aestheticcliniq_internal_auth_dto.UserRequestDTO": {
             "type": "object",
             "required": [
                 "clinic",

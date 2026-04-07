@@ -1,9 +1,9 @@
 package config
 
 import (
-	appointmentModel "clinicprobackend/internal/appointment/model"
-	userModel "clinicprobackend/internal/user/model"
-	professionalModel "clinicprobackend/internal/professional/model"
+	appointmentModel "aestheticcliniq/internal/appointment/model"
+	userModel "aestheticcliniq/internal/user/model"
+	professionalModel "aestheticcliniq/internal/professional/model"
 	"fmt"
 	"os"
 
