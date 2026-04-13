@@ -38,7 +38,7 @@ func GetClinicId(c *gin.Context) string {
 
 // CreateProfessional godoc
 // @Summary      Create a new professional
-// @Description  Creates a professional record
+// @Description  Creates a user with role PROFESSIONAL
 // @Tags         Professionals
 // @Accept       json
 // @Produce      json
@@ -78,7 +78,7 @@ func (h *ProfessionalHandler) CreateProfessional(c *gin.Context) {
 
 // GetAllProfessionals godoc
 // @Summary      Get all professionals
-// @Description  Retrieves a list of all professionals
+// @Description  Retrieves users with role PROFESSIONAL
 // @Tags         Professionals
 // @Produce      json
 // @Success      200  {object}  map[string]interface{}
@@ -97,7 +97,7 @@ func (h *ProfessionalHandler) GetAllProfessionals(c *gin.Context) {
 
 // GetProfessionalByID godoc
 // @Summary      Get a professional by ID
-// @Description  Retrieves a professional by its ID
+// @Description  Retrieves a user with role PROFESSIONAL by ID
 // @Tags         Professionals
 // @Produce      json
 // @Param        id   path      string  true  "Professional ID"
@@ -119,7 +119,7 @@ func (h *ProfessionalHandler) GetProfessionalByID(c *gin.Context) {
 
 // UpdateProfessional godoc
 // @Summary      Update a professional
-// @Description  Partially updates a professional record
+// @Description  Partially updates a user with role PROFESSIONAL
 // @Tags         Professionals
 // @Accept       json
 // @Produce      json
@@ -140,6 +140,8 @@ func (h *ProfessionalHandler) UpdateProfessional(c *gin.Context) {
 
 	protectedFields := map[string]bool{
 		"id":         true,
+		"role":       true,
+		"password":   true,
 		"created_at": true,
 		"updated_at": true,
 	}
@@ -162,7 +164,7 @@ func (h *ProfessionalHandler) UpdateProfessional(c *gin.Context) {
 
 // DeleteProfessional godoc
 // @Summary      Delete a professional
-// @Description  Deletes a professional record
+// @Description  Deletes a user with role PROFESSIONAL
 // @Tags         Professionals
 // @Produce      json
 // @Param        id   path      string  true  "Professional ID"

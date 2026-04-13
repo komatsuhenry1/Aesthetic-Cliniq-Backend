@@ -3,12 +3,12 @@ package dto
 import "errors"
 
 type ProfessionalRequestDTO struct {
-	UserID    *string `json:"user_id"`
-	Name      string  `json:"name" binding:"required"`
-	Specialty string  `json:"specialty" binding:"required"`
-	Phone     string  `json:"phone" binding:"required"`
-	Email     string  `json:"email" binding:"required"`
-	Status    string  `json:"status"`
+	Name      string `json:"name" binding:"required"`
+	Specialty string `json:"specialty" binding:"required"`
+	Phone     string `json:"phone" binding:"required"`
+	Email     string `json:"email" binding:"required"`
+	Password  string `json:"password"`
+	Status    string `json:"status"`
 }
 
 type ProfessionalNamesAndIdsDTO struct {

@@ -2,16 +2,16 @@ package service
 
 import (
 	"aestheticcliniq/internal/professional/dto"
-	"aestheticcliniq/internal/professional/model"
 	"aestheticcliniq/internal/professional/repository"
+	userModel "aestheticcliniq/internal/user/model"
 	"aestheticcliniq/internal/utils"
 )
 
 type ProfessionalService interface {
 	CreateProfessional(requestDto *dto.ProfessionalRequestDTO, clinicId string) error
-	GetAllProfessionals() ([]model.Professional, error)
-	GetProfessionalByID(id string) (*model.Professional, error)
-	UpdateProfessionalPartial(id string, updates map[string]interface{}) (*model.Professional, error)
+	GetAllProfessionals() ([]userModel.User, error)
+	GetProfessionalByID(id string) (*userModel.User, error)
+	UpdateProfessionalPartial(id string, updates map[string]interface{}) (*userModel.User, error)
 	DeleteProfessional(id string) error
 	GetAllNamesAndIds() ([]dto.ProfessionalNamesAndIdsDTO, error)
 }
@@ -36,32 +36,47 @@ func (s *professionalService) CreateProfessional(requestDto *dto.ProfessionalReq
 		return err
 	}
 
+	if requestDto.Password != "" {
+		if err := utils.ValidatePasswordRegex(requestDto.Password); err != nil {
+			return err
+		}
+	}
+
+	hashedPassword := requestDto.Password
+	if hashedPassword == "" {
+		hashedPassword = "Password1@"
+	}
+	
+	if err := utils.HashPassword(&hashedPassword); err != nil {
+		return err
+	}
 	status := requestDto.Status
 	if status == "" {
 		status = "ativo"
 	}
 
-	professional := model.Professional{
+	user := userModel.User{
 		ClinicID:  clinicId,
-		UserID:    requestDto.UserID,
 		Name:      utils.CapitalizeWords(requestDto.Name),
 		Specialty: utils.CapitalizeWords(requestDto.Specialty),
 		Phone:     normalizedPhone,
 		Email:     normalizedEmail,
+		Password:  hashedPassword,
+		Role:      "PROFESSIONAL",
 		Status:    status,
 	}
-	return s.professionalRepository.CreateProfessional(&professional)
+	return s.professionalRepository.CreateProfessional(&user)
 }
 
-func (s *professionalService) GetAllProfessionals() ([]model.Professional, error) {
+func (s *professionalService) GetAllProfessionals() ([]userModel.User, error) {
 	return s.professionalRepository.GetAllProfessionals()
 }
 
-func (s *professionalService) GetProfessionalByID(id string) (*model.Professional, error) {
+func (s *professionalService) GetProfessionalByID(id string) (*userModel.User, error) {
 	return s.professionalRepository.GetProfessionalByID(id)
 }
 
-func (s *professionalService) UpdateProfessionalPartial(id string, updates map[string]interface{}) (*model.Professional, error) {
+func (s *professionalService) UpdateProfessionalPartial(id string, updates map[string]interface{}) (*userModel.User, error) {
 	return s.professionalRepository.UpdateProfessionalPartial(id, updates)
 }
 

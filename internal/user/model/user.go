@@ -12,6 +12,8 @@ type User struct {
 	ClinicID     string    `json:"clinic_id"`
 	Password     string    `json:"password"`
 	Role         string    `json:"role"`
+	Specialty    string    `json:"specialty"` // usado por profissionais (role = "PROFESSIONAL")
+	Status       string    `json:"status"`    // "ativo" / "inativo" — usado por profissionais
 	RefreshToken string    `json:"refresh_token"`
 	CreatedAt    time.Time `gorm:"autoCreateTime"`
 	UpdatedAt    time.Time `gorm:"autoUpdateTime"`
