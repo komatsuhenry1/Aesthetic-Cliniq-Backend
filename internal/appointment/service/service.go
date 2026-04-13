@@ -5,6 +5,7 @@ import (
 	"aestheticcliniq/internal/appointment/model"
 	"aestheticcliniq/internal/appointment/repository"
 	"aestheticcliniq/internal/utils"
+	"fmt"
 )
 
 type AppointmentService interface {
@@ -29,8 +30,16 @@ func NewAppointmentService(repo repository.AppointmentRepository) AppointmentSer
 func (s *appointmentService) CreateAppointment(requestDto *dto.AppointmentRequestDTO, userId string, userRole string) error {
 
 	if userRole == "USER"{
+		fmt.Println("caiu no if")
+		
 		requestDto.PatientID = userId
 	}
+
+
+	fmt.Println("===========================: ")
+	fmt.Println("userRole: ", userRole)
+	fmt.Println("patientID: ", userId)
+	fmt.Println("===========================: ")
 
 	formatedNote := utils.CapitalizeFirstWord(requestDto.Notes)
 
