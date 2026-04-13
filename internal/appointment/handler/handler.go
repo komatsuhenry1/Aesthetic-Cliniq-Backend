@@ -35,6 +35,12 @@ func NewAppointmentHandler(s service.AppointmentService) *AppointmentHandler {
 func (h *AppointmentHandler) CreateAppointment(c *gin.Context) {
 	var requestDto dto.AppointmentRequestDTO
 
+	userId, userRole := utils.GetUserIdAndRole(c)
+	if userId == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Usuário não autenticado"})
+		return
+	}
+
 	if err := c.ShouldBindJSON(&requestDto); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -45,7 +51,7 @@ func (h *AppointmentHandler) CreateAppointment(c *gin.Context) {
 		return
 	}
 
-	err := h.service.CreateAppointment(&requestDto)
+	err := h.service.CreateAppointment(&requestDto, userId, userRole)
 	if err != nil {
 		utils.SendErrorResponse(c, err.Error(), http.StatusBadRequest)
 		return

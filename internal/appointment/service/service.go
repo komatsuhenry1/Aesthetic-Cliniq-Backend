@@ -8,7 +8,7 @@ import (
 )
 
 type AppointmentService interface {
-	CreateAppointment(requestDto *dto.AppointmentRequestDTO) error
+	CreateAppointment(requestDto *dto.AppointmentRequestDTO, userId string, userRole string) error
 	GetAppointmentsByDate(date string) ([]dto.AppointmentResponseDTO, error)
 	GetAppointmentsByDateAndProfessional(date string, professionalId string) ([]dto.AppointmentResponseDTO, error)
 	GetAppointmentsWeek(startDate string, endDate string) ([]dto.AppointmentResponseDTO, error)
@@ -26,7 +26,11 @@ func NewAppointmentService(repo repository.AppointmentRepository) AppointmentSer
 	return &appointmentService{appointmentRepository: repo}
 }
 
-func (s *appointmentService) CreateAppointment(requestDto *dto.AppointmentRequestDTO) error {
+func (s *appointmentService) CreateAppointment(requestDto *dto.AppointmentRequestDTO, userId string, userRole string) error {
+
+	if userRole == "USER"{
+		requestDto.PatientID = userId
+	}
 
 	formatedNote := utils.CapitalizeFirstWord(requestDto.Notes)
 
