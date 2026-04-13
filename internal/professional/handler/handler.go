@@ -201,3 +201,35 @@ func (h *ProfessionalHandler) GetAllNamesAndIds(c *gin.Context) {
 
 	utils.SendSuccessResponse(c, "Profissionais encontrados com sucesso.", professionals)
 }
+
+// GetProfessionalDashboard godoc
+// @Summary      Professional dashboard summary
+// @Description  Returns hardcoded summary metrics for the PROFESSIONAL role
+// @Tags         Professionals
+// @Produce      json
+// @Success      200  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /professional/dashboard [get]
+func (h *ProfessionalHandler) GetProfessionalDashboard(c *gin.Context) {
+	data := map[string]interface{}{
+		"appointments_today":   5,
+		"appointments_month":   42,
+		"next_appointment": map[string]interface{}{
+			"time":    "14:00",
+			"patient": "Beatriz Costa",
+			"service": "Limpeza de Pele",
+		},
+		"earnings_month":       4200.00,
+		"cancellations_month":  2,
+		"rating":               4.8,
+		"schedule_today": []map[string]interface{}{
+			{"time": "09:00", "patient": "Ana Souza", "service": "Botox", "status": "confirmado"},
+			{"time": "10:30", "patient": "João Lima", "service": "Peeling", "status": "confirmado"},
+			{"time": "12:00", "patient": "Mariana Feitosa", "service": "Microagulhamento", "status": "pendente"},
+			{"time": "14:00", "patient": "Beatriz Costa", "service": "Limpeza de Pele", "status": "confirmado"},
+			{"time": "16:30", "patient": "Carlos Mendes", "service": "Botox", "status": "confirmado"},
+		},
+	}
+
+	utils.SendSuccessResponse(c, "Dashboard do profissional carregado com sucesso.", data)
+}

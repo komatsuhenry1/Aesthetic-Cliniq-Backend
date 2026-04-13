@@ -12,5 +12,6 @@ func SetupUserRoutes(r *gin.RouterGroup, container *di.Container) {
 	{
 		user.GET("/professionals", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.UserHandler.GetProfessionals)
 		user.PATCH("/:id", middleware.AuthRoles("ADMIN", "PROFESSIONAL"), container.UserHandler.UpdateUser)
+		user.GET("/dashboard", middleware.AuthRoles("ADMIN"), container.UserHandler.GetAdminDashboard)
 	}
 }

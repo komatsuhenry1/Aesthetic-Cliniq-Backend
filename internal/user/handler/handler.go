@@ -81,3 +81,30 @@ func (h *UserHandler) UpdateUser(c *gin.Context) {
 
 	utils.SendSuccessResponse(c, "Usuário atualizado com sucesso.", user)
 }
+
+// GetAdminDashboard godoc
+// @Summary      Admin dashboard summary
+// @Description  Returns hardcoded summary metrics for the ADMIN role
+// @Tags         Users
+// @Produce      json
+// @Success      200  {object}  map[string]interface{}
+// @Security     BearerAuth
+// @Router       /user/dashboard [get]
+func (h *UserHandler) GetAdminDashboard(c *gin.Context) {
+	data := map[string]interface{}{
+		"total_revenue_month":      15800.00,
+		"total_appointments_month": 134,
+		"new_patients_month":       27,
+		"active_professionals":     6,
+		"pending_appointments":     8,
+		"cancellation_rate":        "4.5%",
+		"top_service":              "Limpeza de Pele",
+		"upcoming_today": []map[string]interface{}{
+			{"time": "09:00", "patient": "Ana Souza", "service": "Botox", "professional": "Dra. Carla"},
+			{"time": "10:30", "patient": "João Lima", "service": "Peeling", "professional": "Dr. Marcos"},
+			{"time": "14:00", "patient": "Beatriz Costa", "service": "Limpeza de Pele", "professional": "Dra. Carla"},
+		},
+	}
+
+	utils.SendSuccessResponse(c, "Dashboard do administrador carregado com sucesso.", data)
+}
